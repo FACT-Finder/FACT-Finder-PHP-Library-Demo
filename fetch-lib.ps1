@@ -3,3 +3,5 @@
 
 git fetch ffphplib src-only
 git subtree pull --prefix=lib ffphplib src-only --squash
+
+# TODO: Possibly clean up the git log a bit.

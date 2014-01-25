@@ -1,0 +1,78 @@
+2014-01-25 15:22:41,013 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Initializing URL Builder.
+2014-01-25 15:22:42,151 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 0.
+2014-01-25 15:22:42,212 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Unregistered connection data for ID 0.
+2014-01-25 19:09:37,742 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Initializing URL Builder.
+2014-01-25 19:09:37,748 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 0.
+2014-01-25 19:09:37,751 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 1.
+2014-01-25 19:11:09,972 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Initializing URL Builder.
+2014-01-25 19:11:09,975 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 0.
+2014-01-25 19:11:09,977 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 1.
+2014-01-25 19:11:10,250 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Request Url: http://demoshop.fact-finder.de:80/FACT-Finder/Search.ff?=&channel=de&format=json&verbose=true&timestamp=1390673470000&username=user&password=caedece5fe3582b714c1e1206e075392
+2014-01-25 19:11:10,251 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Request Url: http://demoshop.fact-finder.de:80/FACT-Finder/TagCloud.ff?=&channel=de&do=getTagCloud&format=json&verbose=true&timestamp=1390673470000&username=user&password=caedece5fe3582b714c1e1206e075392
+2014-01-25 19:11:13,179 [16376] FACTFinder.Core.Server.MultiCurlDataProvider INFO  - Request successful!
+2014-01-25 19:11:13,179 [16376] FACTFinder.Core.Server.MultiCurlDataProvider INFO  - Request successful!
+2014-01-25 19:11:24,955 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Initializing URL Builder.
+2014-01-25 19:11:24,958 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 0.
+2014-01-25 19:11:24,961 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 1.
+2014-01-25 19:11:24,963 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Request Url: http://demoshop.fact-finder.de:80/FACT-Finder/Search.ff?=&channel=de&format=json&verbose=true&timestamp=1390673484000&username=user&password=45848307b3ffbaf4e68c271a44554023
+2014-01-25 19:11:24,963 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Request Url: http://demoshop.fact-finder.de:80/FACT-Finder/TagCloud.ff?=&channel=de&do=getTagCloud&format=json&verbose=true&timestamp=1390673484000&username=user&password=45848307b3ffbaf4e68c271a44554023
+2014-01-25 19:11:26,163 [16376] FACTFinder.Core.Server.MultiCurlDataProvider INFO  - Request successful!
+2014-01-25 19:11:26,163 [16376] FACTFinder.Core.Server.MultiCurlDataProvider INFO  - Request successful!
+2014-01-25 19:16:21,982 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Initializing URL Builder.
+2014-01-25 19:16:21,985 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 0.
+2014-01-25 19:16:21,988 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 1.
+2014-01-25 19:16:21,990 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Request Url: http://demoshop.fact-finder.de:80/FACT-Finder/Search.ff?=&channel=de&format=json&verbose=true&timestamp=1390673781000&username=user&password=7c7fc437464225215b735d80ca83d0cb
+2014-01-25 19:16:21,991 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Request Url: http://demoshop.fact-finder.de:80/FACT-Finder/TagCloud.ff?=&channel=de&do=getTagCloud&format=json&verbose=true&timestamp=1390673781000&username=user&password=7c7fc437464225215b735d80ca83d0cb
+2014-01-25 19:16:23,190 [16376] FACTFinder.Core.Server.MultiCurlDataProvider INFO  - Request successful!
+2014-01-25 19:16:23,190 [16376] FACTFinder.Core.Server.MultiCurlDataProvider INFO  - Request successful!
+2014-01-25 19:16:40,694 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Initializing URL Builder.
+2014-01-25 19:16:40,699 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 0.
+2014-01-25 19:16:40,702 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 1.
+2014-01-25 19:16:40,704 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Request Url: http://demoshop.fact-finder.de:80/FACT-Finder/Search.ff?=&channel=de&format=json&verbose=true&timestamp=1390673800000&username=user&password=431476d60922bf81cf0fb171e8222d15
+2014-01-25 19:16:40,705 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Request Url: http://demoshop.fact-finder.de:80/FACT-Finder/TagCloud.ff?=&channel=de&do=getTagCloud&format=json&verbose=true&timestamp=1390673800000&username=user&password=431476d60922bf81cf0fb171e8222d15
+2014-01-25 19:16:41,891 [16376] FACTFinder.Core.Server.MultiCurlDataProvider INFO  - Request successful!
+2014-01-25 19:16:41,892 [16376] FACTFinder.Core.Server.MultiCurlDataProvider INFO  - Request successful!
+2014-01-25 19:17:46,599 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Initializing URL Builder.
+2014-01-25 19:17:46,602 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 0.
+2014-01-25 19:17:46,604 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 1.
+2014-01-25 19:17:46,607 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Request Url: http://demoshop.fact-finder.de:80/FACT-Finder/Search.ff?=&channel=de&format=json&verbose=true&timestamp=1390673866000&username=user&password=310f60229f2b3201efdefa5ca5886cf3
+2014-01-25 19:17:46,607 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Request Url: http://demoshop.fact-finder.de:80/FACT-Finder/TagCloud.ff?=&channel=de&do=getTagCloud&format=json&verbose=true&timestamp=1390673866000&username=user&password=310f60229f2b3201efdefa5ca5886cf3
+2014-01-25 19:17:47,824 [16376] FACTFinder.Core.Server.MultiCurlDataProvider INFO  - Request successful!
+2014-01-25 19:17:47,825 [16376] FACTFinder.Core.Server.MultiCurlDataProvider INFO  - Request successful!
+2014-01-25 19:21:15,078 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Initializing URL Builder.
+2014-01-25 19:21:15,081 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 0.
+2014-01-25 19:21:15,084 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 1.
+2014-01-25 19:21:15,086 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Request Url: http://demoshop.fact-finder.de:80/FACT-Finder/Search.ff?=&channel=de&format=json&verbose=true&timestamp=1390674075000&username=user&password=206eba79ec139ab112e8126a9a0f0712
+2014-01-25 19:21:15,087 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Request Url: http://demoshop.fact-finder.de:80/FACT-Finder/TagCloud.ff?=&channel=de&do=getTagCloud&format=json&verbose=true&timestamp=1390674075000&username=user&password=206eba79ec139ab112e8126a9a0f0712
+2014-01-25 19:21:16,301 [16376] FACTFinder.Core.Server.MultiCurlDataProvider INFO  - Request successful!
+2014-01-25 19:21:16,302 [16376] FACTFinder.Core.Server.MultiCurlDataProvider INFO  - Request successful!
+2014-01-25 19:52:04,339 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Initializing URL Builder.
+2014-01-25 19:52:04,343 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 0.
+2014-01-25 19:52:04,345 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 1.
+2014-01-25 19:52:04,347 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Request Url: http://demoshop.fact-finder.de:80/FACT-Finder/Search.ff?=&channel=de&format=json&verbose=true&timestamp=1390675924000&username=user&password=9c8b3d6200afaed66f66e0c857e2d745
+2014-01-25 19:52:04,348 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Request Url: http://demoshop.fact-finder.de:80/FACT-Finder/TagCloud.ff?=&channel=de&do=getTagCloud&format=json&verbose=true&timestamp=1390675924000&username=user&password=9c8b3d6200afaed66f66e0c857e2d745
+2014-01-25 19:52:05,582 [16376] FACTFinder.Core.Server.MultiCurlDataProvider INFO  - Request successful!
+2014-01-25 19:52:05,582 [16376] FACTFinder.Core.Server.MultiCurlDataProvider INFO  - Request successful!
+2014-01-25 19:52:26,532 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Initializing URL Builder.
+2014-01-25 19:52:26,536 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 0.
+2014-01-25 19:52:26,538 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 1.
+2014-01-25 19:52:26,540 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Request Url: http://demoshop.fact-finder.de:80/FACT-Finder/Search.ff?=&channel=de&format=json&verbose=true&timestamp=1390675946000&username=user&password=6ff999eebfdf8c44cf820c0795d0eaf9
+2014-01-25 19:52:26,541 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Request Url: http://demoshop.fact-finder.de:80/FACT-Finder/TagCloud.ff?=&channel=de&do=getTagCloud&format=json&verbose=true&timestamp=1390675946000&username=user&password=6ff999eebfdf8c44cf820c0795d0eaf9
+2014-01-25 19:52:27,755 [16376] FACTFinder.Core.Server.MultiCurlDataProvider INFO  - Request successful!
+2014-01-25 19:52:27,756 [16376] FACTFinder.Core.Server.MultiCurlDataProvider INFO  - Request successful!
+2014-01-25 19:52:28,421 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Unregistered connection data for ID 1.
+2014-01-25 19:52:28,421 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Unregistered connection data for ID 0.
+2014-01-25 19:57:39,830 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Initializing URL Builder.
+2014-01-25 19:57:39,834 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 0.
+2014-01-25 19:57:39,836 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 1.
+2014-01-25 19:59:08,540 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Initializing URL Builder.
+2014-01-25 19:59:08,543 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 0.
+2014-01-25 19:59:08,546 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 1.
+2014-01-25 20:00:26,429 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Initializing URL Builder.
+2014-01-25 20:00:26,432 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 0.
+2014-01-25 20:00:26,435 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 1.
+2014-01-25 20:01:39,610 [16376] FACTFinder.Core.Server.UrlBuilder INFO  - Initializing URL Builder.
+2014-01-25 20:01:39,613 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 0.
+2014-01-25 20:01:39,616 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Registered connection data for ID 1.
+2014-01-25 20:01:40,277 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Unregistered connection data for ID 1.
+2014-01-25 20:01:40,278 [16376] FACTFinder.Core.Server.AbstractDataProvider DEBUG - Unregistered connection data for ID 0.
