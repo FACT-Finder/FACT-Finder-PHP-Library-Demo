@@ -4,7 +4,7 @@
 		<!-- input type="hidden" name="{* $channelParam *}" value="{* channel *}" / -->
 		<input type="text" name="query" id="query"
 			value="<?php
-				if ($searchParameters->getQuery() == '' || $searchParameters->isNavigation()) {
+				if ($searchParameters->getQuery() == '' || $searchParameters->isNavigationEnabled()) {
 					echo 'enter search query...', '" class="default';
 				} else {
 					echo htmlspecialchars($searchParameters->getQuery());
