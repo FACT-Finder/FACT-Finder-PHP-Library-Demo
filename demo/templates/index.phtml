@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $encoding; ?>"/>
+		<title>FACT-Finder Demoshop - Searched for "<?php echo $searchParameters->getQuery(); ?>"</title>
+
+		<link rel="shortcut icon" href="./files/images/demoshop/favicon.ico">
+		<link rel="stylesheet" type="text/css" href="./files/css/demoshop.css">
+		<link rel="stylesheet" type="text/css" href="./files/css/suggest.css">
+
+		<script language="JavaScript" type="text/javascript" src="./files/js/ffsuggest.list.noJquery.jsonp.js"></script>
+		<script language="JavaScript" type="text/javascript" src="./files/js/fftracking.js"></script>
+		<script language="JavaScript" type="text/javascript" src="./files/js/jquery/jquery-1.2.6.min.js"></script>
+		<script language="javascript" type="text/javascript" src="http://static.express.fact-finder.com/onetouchslider-1.0/de.factfinder.asn.slider.OneTouchSlider.nocache.js"></script>
+
+		<script language="JavaScript" type="text/javascript" src="./files/js/demoshop/demoshop.js"></script>
+		<script language="JavaScript" type="text/javascript" src="./files/js/demoshop/infomode.js"></script>
+
+		<script language="JavaScript" type="text/javascript">
+			<?php include $this->getTemplate('js/extratracking.js'); ?>
+		</script>
+
+		<?php echo $campaigns->getFeedback('html header'); ?>
+	</head>
+	<body>
+		<script type="text/javascript" src="./files/js/wz_tooltip/wz_tooltip.js"></script>
+		<div id="container" >
+			<div id="header">
+				<?php include $this->getTemplate('header'); ?>
+			</div>
+
+			<div id="searchboxLine" class="asnHint">
+				<div id="searchbox">
+					<?php include $this->getTemplate('searchbox'); ?>
+				</div>
+
+				<div id="SearchboxCMPlaceHolder">
+					<?php echo $campaigns->getFeedback('header'); ?>
+				</div>
+
+				<?php if (!$searchParameters->isNavigationEnabled()) { ?>
+					<div id="buttons">
+						<img src="./files/images/demoshop/modus_info_off.png" alt="Info" id="infoButton">
+					</div>
+				<?php } ?>
+			</div>
+
+			<div id="content">
+				<div id="asnColumn" class="asnHintEN" >
+					<?php echo $campaigns->getFeedback('above asn'); ?>
+
+					<?php include $this->getTemplate('asn'); ?>
+
+					<?php echo $campaigns->getFeedback('below asn'); ?>
+				</div>
+
+				<div id="resultColumn">
+					<?php include $this->getTemplate('body'); ?>
+				</div>
+
+				<div id="infoColumn">
+					<?php echo $campaigns->getFeedback('above info panel'); ?>
+
+					<?php if (!$searchParameters->isNavigationEnabled()) { ?>
+						<div id="infoPlaceHolder">
+							<h3>Info column</h3>
+							<p>When you activate the Help mode, an explanatory text for the elements on this page will appear. Move the mouse cursor over an element to display the help text for that element.</p>
+						</div>
+					<?php } ?>
+
+					<?php if ($asn->hasPreviewImages() && $campaigns->hasPushedProducts()) { ?>
+						<div id="pushedProducts">
+							<p>Our Topsellers</p>
+
+							<?php
+								foreach ($campaigns->getPushedProducts() AS $record) {
+									include $this->getTemplate('product');
+								}
+							?>
+
+						</div>
+					<?php } ?>
+
+					<?php if (isset($tagCloud) && !empty($tagCloud)) {
+						include $this->getTemplate('tagCloud');
+					} ?>
+						<div class="clear">&nbsp;</div>
+				</div>
+			</div>
+			<div id="footer">
+				<?php include $this->getTemplate('footer'); ?>
+			</div>
+		</div>
+	</body>
+</html>
