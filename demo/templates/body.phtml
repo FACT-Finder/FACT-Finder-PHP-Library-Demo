@@ -32,7 +32,7 @@
 		foreach($campaigns->getActiveQuestions() AS $question) {
 			echo '<p class="question">'.$question->getText().'</p>';
 			foreach($question->getAnswers() AS $answer) {
-				echo '<a class="answer" href="'.$answer->getParams().'">'.$answer->getText().'</a>';
+				echo '<a class="answer" href="'.$answer->getUrl().'">'.$answer->getText().'</a>';
 			}
 		}
 		echo '</div>';
