@@ -78,22 +78,7 @@
 
 	// sorting and paging or info text, if navigation is enabled
 	if (isset($result) && count($result) > 0 && !$searchParameters->isNavigationEnabled()) {
-		echo '<div class="optionBox sortBox">Sorting:
-				<select onchange="document.location.href=this.value;">';
-		foreach ($sorting AS $sortItem) {
-			if ($sortItem->isSelected()) {
-				$selected = ' selected ';
-			} else {
-				$selected = '';
-			}
-			echo '<option value="'.$sortItem->getUrl().'"'.$selected.'>'. $sortItem->getLabel();
-			if ($sortItem->isSelected()) {
-				echo ' (selected)';
-			}
-			echo '</option>';
-		}
-		echo '</select>
-			</div>';
+		include $this->getTemplate('sorting');
 
 		include $this->getTemplate('paging');
 

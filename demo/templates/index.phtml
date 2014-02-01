@@ -14,7 +14,6 @@
 		<script language="javascript" type="text/javascript" src="http://static.express.fact-finder.com/onetouchslider-1.0/de.factfinder.asn.slider.OneTouchSlider.nocache.js"></script>
 
 		<script language="JavaScript" type="text/javascript" src="./files/js/demoshop/demoshop.js"></script>
-		<script language="JavaScript" type="text/javascript" src="./files/js/demoshop/infomode.js"></script>
 
 		<script language="JavaScript" type="text/javascript">
 			<?php include $this->getTemplate('js/extratracking.js'); ?>
@@ -37,12 +36,6 @@
 				<div id="SearchboxCMPlaceHolder">
 					<?php echo $campaigns->getFeedback('header'); ?>
 				</div>
-
-				<?php if (!$searchParameters->isNavigationEnabled()) { ?>
-					<div id="buttons">
-						<img src="./files/images/demoshop/modus_info_off.png" alt="Info" id="infoButton">
-					</div>
-				<?php } ?>
 			</div>
 
 			<div id="content">
@@ -60,13 +53,6 @@
 
 				<div id="infoColumn">
 					<?php echo $campaigns->getFeedback('above info panel'); ?>
-
-					<?php if (!$searchParameters->isNavigationEnabled()) { ?>
-						<div id="infoPlaceHolder">
-							<h3>Info column</h3>
-							<p>When you activate the Help mode, an explanatory text for the elements on this page will appear. Move the mouse cursor over an element to display the help text for that element.</p>
-						</div>
-					<?php } ?>
 
 					<?php if ($asn->hasPreviewImages() && $campaigns->hasPushedProducts()) { ?>
 						<div id="pushedProducts">
