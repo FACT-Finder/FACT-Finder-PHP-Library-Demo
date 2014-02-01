@@ -49,7 +49,8 @@
 						}
 
 						if (isset($campaigns)) echo $campaigns->getFeedback('below breadcrumb');
-						echo 'Your query did not match any records.<br>Please try other keywords.';
+
+						echo '<br>Your query did not match any records.<br>Please try other keywords.';
 						if (isset($campaigns)) echo $campaigns->getFeedback('above search result');
 					?>
 

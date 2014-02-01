@@ -65,12 +65,12 @@ function FFSuggest() {
 		document[pFormName].onsubmit = handleSubmit;
 
 		ptranslation = {};
-		ptranslation['unspecified'] = 'Sonstiges';
-		ptranslation['productName'] = 'Produktname';
-		ptranslation['brand'] = 'Hersteller';
-		ptranslation['content'] = 'Inhalt';
-		ptranslation['searchTerm'] = 'Suchbegriff';
-		ptranslation['category'] = 'Kategorie';
+		ptranslation['unspecified'] = '';
+		ptranslation['productName'] = 'Product name';
+		ptranslation['brand'] = 'Brand';
+		ptranslation['content'] = 'Content';
+		ptranslation['searchTerm'] = 'Search term';
+		ptranslation['category'] = 'Category';
 	};
 
 	function handleSubmit() {
@@ -191,7 +191,7 @@ function FFSuggest() {
 
 					window.setTimeout(function() {
 						if (pDebug && typeof window[randomFuncName] == 'function') {
-							alert('Request fehlgeschlagen!');
+							alert('Request failed!');
 						}
 					}, 5000);
 				} else {
@@ -285,11 +285,10 @@ function FFSuggest() {
 			if (suggestCount==0) {
 				suggestCount = '';
 			}else if (suggestCount==1) {
-				suggestCount = '1 Treffer';
+				suggestCount = '1 hit';
 			}else {
 				var temp = suggestCount;
-				suggestCount = '{0} Treffer';
-				suggestCount = suggestCount.replace(/\{0\}/,temp);
+				suggestCount = temp + ' hits';
 			}
 			var suggestType = ptranslation[jsonObj[i].type];
 			if (!suggestType) {

@@ -20,7 +20,7 @@
 			<timeouts>
 				<defaultConnectTimeout>2</defaultConnectTimeout>
 				<defaultTimeout>4</defaultTimeout>
-				<suggestConnectTimeout>1</suggestConnectTimeout>
+				<suggestConnectTimeout>2</suggestConnectTimeout>
 				<suggestTimeout>2</suggestTimeout>
 				<trackingConnectTimeout>1</trackingConnectTimeout>
 				<trackingTimeout>2</trackingTimeout>

@@ -46,6 +46,7 @@ class HtmlGenerator
             'Data\SearchParameters',
             $this->requestParser->getRequestParameters()
         );
+        $target = $this->requestParser->getRequestTarget();
 
         $trackingEvents = array();
 
