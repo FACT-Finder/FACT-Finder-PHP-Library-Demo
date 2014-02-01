@@ -1,0 +1,48 @@
+<?php
+	if (!isset($fieldname)) {
+		include 'fieldnamesConfig.php';
+	}
+
+	$articleNr   = $record->getField($fieldname['artNo']);
+	$title       = $record->getField($fieldname['title']);
+	$price       = $record->getField($fieldname['price']);
+	$description = $record->getField($fieldname['description']);
+	$imageUrl    = $record->getField($fieldname['imageUrl']);
+	$detailUrl   = $record->getField($fieldname['detailUrl']);
+	$sid         = '';
+?>
+
+<div class="productWrap">
+	<div class="product">
+		<div class="picture">
+			<a href="<?php echo $detailUrl; ?>" onclick="<?php //echo $util->createJavaScriptClickCode($record, $title, $sid, false); ?>">
+				<img valign="top" src="<?php echo $imageUrl; ?>" alt="no picture"
+					title="<?php echo addslashes($title); ?>" onload="resizePicture(this, 120, 170)"
+					onmouseover="TagToTip('descr<?php echo $articleNr; ?>', SHADOW, true)" onmouseout="UnTip()" />
+			</a>
+		</div>
+
+		<div style="display:none">
+			<span id="descr<?php echo $articleNr; ?>" class="hoverDescription">
+				<p style="width:200px; font-weight: bold; margin-bottom: 2px;"><?php echo $title; ?></p>
+				<p style="width:200px; text-align: right; margin-top: 0;">
+					Art. No.: <?php echo $articleNr; ?>
+				</p>
+				<p style="width:200px;">
+				<?php
+					echo mb_strimwidth($description, 0, 160, '..', 'UTF-8');
+				?>
+			</p>
+			</span>
+		</div>
+
+		<div class="title">
+			<a href="<?php echo $detailUrl; ?>" onclick="<?php //echo $util->createJavaScriptClickCode($record, $title, $sid); ?>">
+			<?php
+				echo mb_strimwidth($title, 0, 23, '..', 'UTF-8');
+			?>
+			</a>
+		</div>
+		<div class="price"><?php echo $price; ?> &euro;</div>
+	</div>
+</div>

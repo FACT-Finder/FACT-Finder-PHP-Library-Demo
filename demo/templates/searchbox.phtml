@@ -1,0 +1,33 @@
+<div class="suggestFormWrap" >
+	<form action="<?php echo $target; ?>" method="GET" name="search_word_inc">
+		<input type="hidden" name="queryFromSuggest" />
+		<!-- input type="hidden" name="{* $channelParam *}" value="{* channel *}" / -->
+		<input type="text" name="query" id="query"
+			value="<?php
+				if ($searchParameters->getQuery() == '' || $searchParameters->isNavigationEnabled()) {
+					echo 'enter search query...', '" class="default';
+				} else {
+					echo htmlspecialchars($searchParameters->getQuery());
+				} ?>"
+			autocomplete="off" />
+
+		<input type="image" id="submit" src="./files/images/demoshop/searchbox_button_en.png"/>
+		<div id="suggestLayer" class="suggestLayer"></div>
+		<script language="JavaScript" type="text/javascript">
+		<!--
+				var suggest				= new FFSuggest();
+				var searchURL			= 'suggest.php';
+				var formname			= 'search_word_inc';
+				var queryParamName		= 'query';
+				var channelParamName	= 'channel';
+				var channel				= '<?php echo $searchParameters->getChannel(); ?>';
+				var divLayername		= 'suggestLayer';
+				var instanceName		= 'suggest';
+				var debugMode			= false;
+				var showImages          = false;
+				suggest.init(searchURL, formname, queryParamName, divLayername, instanceName, debugMode, channelParamName, channel, showImages);
+				document.onmousedown = suggest.hideLayerOutsideCall;
+		// -->
+		</script>
+	</form>
+</div>

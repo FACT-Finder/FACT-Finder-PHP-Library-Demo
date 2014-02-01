@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $encoding; ?>"/>
+		<title>FACT-Finder Demoshop - Searched for "<?php echo $searchParameters->getQuery(); ?>"</title>
+
+		<link rel="shortcut icon" href="./files/images/demoshop/favicon.ico">
+		<link rel="stylesheet" type="text/css" href="./files/css/demoshop.css">
+		<link rel="stylesheet" type="text/css" href="./files/css/suggest.css">
+
+		<script language="JavaScript" type="text/javascript" src="./files/js/ffsuggest.list.noJquery.jsonp.js"></script>
+		<script language="JavaScript" type="text/javascript" src="./files/js/jquery/jquery-1.2.6.min.js"></script>
+
+		<script language="JavaScript" type="text/javascript" src="./files/js/demoshop/demoshop.js"></script>
+
+		<?php if (isset($campaigns)) echo $campaigns->getFeedback('html header'); ?>
+	</head>
+	<body>
+		<script type="text/javascript" src="./files/js/wz_tooltip/wz_tooltip.js"></script>
+
+		<div id="container" >
+			<div id="header">
+				<?php include $this->getTemplate('header'); ?>
+			</div>
+
+			<div id="searchboxLine">
+				<div id="searchbox">
+					<?php include $this->getTemplate('searchbox'); ?>
+				</div>
+				<div id="SearchboxCMPlaceHolder">
+					<?php if (isset($campaigns)) echo $campaigns->getFeedback('header'); ?>
+				</div>
+			</div>
+
+			<div id="content">
+
+				<div id="asnColumn">
+					<?php if (isset($campaigns)) echo $campaigns->getFeedback('above asn'); ?>
+					<?php if (isset($campaigns)) echo $campaigns->getFeedback('below asn'); ?>
+				</div>
+
+				<div id="resultColumn">
+
+					<p id="breadCrumbTrail"><?php echo $message; ?></p>
+
+					<?php
+						if (isset($isSearchTimedOut) && $isSearchTimedOut) {
+							echo '<p class="timeout">The search exceeded the maximum search time. The result could maybe not be complete. The reason is an overstrained server.</p>';
+						}
+
+						if (isset($campaigns)) echo $campaigns->getFeedback('below breadcrumb');
+
+						echo '<br>Your query did not match any records.<br>Please try other keywords.';
+						if (isset($campaigns)) echo $campaigns->getFeedback('above search result');
+					?>
+
+					<hr class="resultLineNoMatch">
+
+					<?php
+						// single words
+						if (!empty($singleWordSearch) && count($singleWordSearch) > 0) {
+							echo '<p class="resultSingleQueries">For some parts of your query we found these result counts:</p>';
+							echo '<ul class="resultSingleQueriesList">';
+							foreach($singleWordSearch as $suggestions) {
+								echo '<li><a href="'.$suggestions->getUrl().'">'.htmlspecialchars($suggestions->getQuery()).' ('.$suggestions->getHitCount().')</a></li>';
+							}
+							echo '</ul>';
+						}
+					?>
+
+					<?php if (isset($campaigns)) echo $campaigns->getFeedback('above pushed product'); ?>
+
+					<?php if (isset($campaigns) && count($campaigns->getPushedProducts()) > 0) { ?>
+						<p class="noMatchTopseller">Alternatively we would like to show you our most popular products.</p>
+
+						<div id="pushedProducts">
+							<?php
+								foreach ($campaigns->getPushedProducts() AS $record) {
+									include $this->getTemplate('product');
+								}
+							?>
+						</div>
+					<?php } ?>
+					<div class="clear">&nbsp;</div>
+
+					<?php if (isset($campaigns)) echo $campaigns->getFeedback('below search result'); ?>
+				</div>
+
+				<div id="infoColumn">
+					<?php if (isset($campaigns)) echo $campaigns->getFeedback('above info panel'); ?>
+				</div>
+		 	</div>
+		 	<div id="footer">
+				<?php include $this->getTemplate('footer'); ?>
+			</div>
+		</div>
+	</body>
+</html>

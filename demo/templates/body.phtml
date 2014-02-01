@@ -1,0 +1,137 @@
+<?php
+	// Helper function to render the whole advisor tree (only used as debug output)
+	function renderAdvisorQuestion($question) {
+		echo '<span class="question">'.$question->getText().'</span><br/>';
+		echo '<div style="margin-left:10px;">';
+		foreach($question->getAnswers() AS $answer) {
+			echo '<span class="answer">'.$answer->getText().'</span><br/>';
+			if($answer->hasSubquestions()) {
+				echo '<div style="margin-left:10px;">';
+				foreach($answer->getSubquestions() AS $subquestion) {
+					renderAdvisorQuestion($subquestion);
+				}
+				echo '</div>';
+			}
+		}
+		echo '</div>';
+	}
+
+	if ($campaigns->hasAdvisorTree()) {
+		echo '<div id="advisorCampaign">';
+		echo '<p>Debug-Ausgabe:</p>';
+		echo '<div style="margin-left:10px;">';
+		foreach($campaigns->getAdvisorTree() AS $question) {
+			renderAdvisorQuestion($question);
+		}
+		echo '</div>';
+		echo '</div>';
+	}
+
+	if ($campaigns->hasActiveQuestions()) {
+		echo '<div id="advisorCampaign">';
+		foreach($campaigns->getActiveQuestions() AS $question) {
+			echo '<p class="question">'.$question->getText().'</p>';
+			foreach($question->getAnswers() AS $answer) {
+				echo '<a class="answer" href="'.$answer->getUrl().'">'.$answer->getText().'</a>';
+			}
+		}
+		echo '</div>';
+	}
+
+
+	// breadcrumbs
+	if (isset($result) && count($result) > 0 && !$searchParameters->isNavigationEnabled()) {
+		$breadCrumbTrailString = '';
+		foreach($breadCrumbTrail AS $breadCrumb) {
+			if ($breadCrumbTrailString != '') {
+				$breadCrumbTrailString .= ' &raquo; ';
+			}
+			$breadCrumbTrailString .= '<a href="'.$breadCrumb->getUrl().'">'.htmlspecialchars($breadCrumb->getLabel()).'</a>';
+		}
+		echo '
+			<p id="breadCrumbTrail">
+				Your search for "'.
+				$breadCrumbTrailString
+				.'" matched to '.
+				$result->getFoundRecordsCount()
+				.' products
+			</p>';
+	}
+
+	echo $campaigns->getFeedback('below breadcrumb');
+
+	if ($isSearchTimedOut) {
+		echo '<p class="timeout">The search exceeded the maximum search time. The result could maybe not be complete. The reason is an overstrained server.</p>';
+	}
+
+	// single words
+	if (!empty($singleWordSearch) && count($singleWordSearch) > 0) {
+		echo '<p class="resultSingleQueries">For some parts of your query we obtained these result counts:</p>';
+		echo '<ul class="resultSingleQueriesList">';
+		foreach($singleWordSearch AS $query) {
+			echo '<li><a href="'.$query->getUrl().'">'.htmlspecialchars($query->getQuery()).' ('.$query->getHitCount().')</a></li>';
+		}
+		echo '</ul>';
+	}
+
+	echo $campaigns->getFeedback('above search result');
+
+	// sorting and paging or info text, if navigation is enabled
+	if (isset($result) && count($result) > 0 && !$searchParameters->isNavigationEnabled()) {
+		include $this->getTemplate('sorting');
+
+		include $this->getTemplate('paging');
+
+	} else {
+		echo '<div class="paging browseTop">Select a category to see the products in it.</div>';
+	}
+
+	include $this->getTemplate('previewImageAsn');
+
+	echo '<div id="results">'; // result body
+
+	echo $campaigns->getFeedback('above pushed product');
+
+	// pushed products on top
+	if ( (empty($asn) || !$asn->hasPreviewImages()) && isset($campaigns) && $campaigns->hasPushedProducts()) {
+		echo '<div id="pushedProducts">
+				<p>Our Topsellers</p>';
+		foreach ($campaigns->getPushedProducts() AS $record) {
+			include $this->getTemplate('product');
+		}
+		echo '</div>
+			<div class="clear">&nbsp;</div>';
+	}
+
+	// results
+	echo '<div id="resultWrap">';
+	foreach($result AS $record) {
+		include $this->getTemplate('product');
+	}
+	echo '</div>';
+
+	// eof result body
+	echo '</div>
+		<div class="clear">&nbsp;</div>';
+
+	// show products per page and paging
+	if (isset($result) && count($result) > 0 && !$searchParameters->isNavigationEnabled()) {
+		include $this->getTemplate('paging');
+
+		echo '<div class="optionBox">
+			<select onchange="document.location.href=this.value;" />';
+		foreach($productsPerPageOptions AS $option) {
+			if ($option->isSelected()) {
+				$selected = ' selected ';
+			} else {
+				$selected = '';
+			}
+			echo '<option value="'.$option->getUrl().'" '.$selected.'>'.$option->getLabel().' products per page</option>';
+		}
+
+		echo '</select>
+			</div>';
+	}
+
+	echo $campaigns->getFeedback('below search result');
+?>

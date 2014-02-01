@@ -1,0 +1,35 @@
+<div class="paging">
+	<?php if (!empty($paging) && $paging->getPageCount() > 1) { ?>
+		<table width="100%" cellspacing="0" cellpadding="0">
+			<tr>
+				<td class="previousPage">
+					<?php
+					if (!is_null($paging->getPreviousPage()))
+						echo '<a href="'.$paging->getPreviousPage()->getUrl().'">previous page</a>';
+					?>
+				</td>
+				<td class="pageLinks">
+					<?php
+					foreach ($paging AS $page) {
+						if ($page->isSelected()) {
+							echo '<span class="paging currentPage">'.$page->getLabel().'</span>';
+						} else {
+							echo '<a class="paging" href="'.$page->getUrl().'">'.$page->getLabel().'</a>';
+						}
+					}
+					?>
+				</td>
+				<td class="nextPage">
+					<?php
+					if (!is_null($paging->getNextPage()))
+						echo '<a href="'.$paging->getNextPage()->getUrl().'">next page</a>';
+					?>
+				</td>
+			</tr>
+		</table>
+	<?php
+	} else {
+		echo 'Page 1 of 1';
+	}
+	?>
+</div>

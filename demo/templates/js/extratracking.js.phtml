@@ -1,0 +1,7 @@
+<?php if (isset($util))
+    echo $util->createJavaScriptEventCode($trackingEvents, $sid, $ffparams->getChannel());
+?>
+
+function onSuggestCompleted(displayed, suggestResult) {
+    trackEvent('display', suggestResult[0].refKey, '<?php echo $sid?>', '<?php echo $searchParameters->getChannel() ?>', {});
+}

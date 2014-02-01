@@ -1,0 +1,25 @@
+<?php
+    // You could also use some form of i18n here
+    $labels = array(
+        'sort.relevanceDescription' => 'Relevance',
+        'sort.priceAsc' => 'Increasing Price',
+        'sort.priceDesc' => 'Decreasing Price',
+        'sort.titleAsc' => 'Name (A-Z)',
+        'sort.titleDesc' => 'Name (Z-A)',
+    );
+?>
+<div class="optionBox sortBox">
+    Sorting:
+    <select onchange="document.location.href=this.value;">
+        <?php foreach ($sorting AS $sortItem):
+            $selected = $sortItem->isSelected() ? ' selected ' : '';
+        ?>
+            <option value="<?php echo $sortItem->getUrl(); ?>"<?php echo $selected; ?>>
+                <?php echo $labels[$sortItem->getLabel()]; ?>
+                <?php if ($sortItem->isSelected()): ?>
+                     (selected)
+                <?php endif; ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
