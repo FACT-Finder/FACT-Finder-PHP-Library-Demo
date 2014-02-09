@@ -67,7 +67,6 @@ $dic['requestFactory'] = $dic->share(function($c) {
         'Core\Server\MultiCurlRequestFactory',
         $c['loggerClass'],
         $c['configuration'],
-        FF::getInstance('Util\Curl'), // Can be replaced with a stub
         $c['requestParser']->getRequestParameters()
     );
 });
