@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>initialization.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="HtmlGenerator.html">
+                HtmlGenerator.php
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.php
+              </a>
+            
+              
+              <a class="source" href="suggest.html">
+                suggest.php
+              </a>
+            
+              
+              <a class="source" href="tracking.html">
+                tracking.php
+              </a>
+            
+              
+              <a class="source" href="initialization.html">
+                initialization.php
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>initialization.php</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-preprocessor">&lt;?php</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>This script programmatically configures all necessary dependencies. It
+requires that a global variable <code>$dic</code> contains an instance of the <code>Pimple</code>
+dependency injection container.</p>
+<p>In most cases you can just use this setup as is and go ahead and instantiate
+your adapters. However, if you want to swap out some of the dependencies,
+the annotations explain what each dependency is for.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">namespace</span> <span class="hljs-title">FACTFinderDemo</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Make our alias for the <code>Loader</code> known within this file.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">use</span> <span class="hljs-title">FACTFinder</span>\<span class="hljs-title">Loader</span> <span class="hljs-title">as</span> <span class="hljs-title">FF</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Because Pimple works by defining as anonymous functions which are not called
+until the dependency is actually needed, we can define them in any order.
+This way, we can start by setting up the dependencies we know we need and add
+their (second-level) dependencies afterwards.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>As explained in the <a href="index.html#adapter-dependencies">index.php</a>, the
+adapters have four dependencies, so let’s set those up and fill in their own
+dependencies as we go along.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>First, the adapters need the class name of a logger (as does pretty much any
+other class in the library). Here, we’re using a logger that just forwards
+all calls to <a href="https://logging.apache.org/log4php/"><em>log4php</em></a>. While we’re at
+it, we’ll also configure <em>log4php</em>. Because we only want to run this function
+once (and then just want the resulting string over and over again), we pass
+the anonymous function to <code>$dic-&gt;share()</code>.</p>
+<p>If you want to log the demo itself differently from the library, you have two
+options:</p>
+<ul>
+<li>When you instantiate this logger, you can just give it a unique scope
+(simply using the namespace <code>\FACTFinderDemo</code> will suffice) and configure
+that scope separately in <code>./userdata/log4php.xml</code>.</li>
+<li>Alternatively, use a different logger class for logging outside of the
+library.</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-variable">$dic</span>[<span class="hljs-string">'loggerClass'</span>] = <span class="hljs-variable">$dic</span>-&gt;share(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
+    <span class="hljs-variable">$loggerClass</span> = FF::getClassName(<span class="hljs-string">'Util\Log4PhpLogger'</span>);
+    <span class="hljs-variable">$loggerClass</span>::configure(USERDATA_DIR.DS.<span class="hljs-string">'log4php.xml'</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-variable">$loggerClass</span>;
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Second, adapters need a configuration (again, almost any object in the
+library needs access to the configuration). This demo uses an implementation
+of <code>ConfigurationInterface</code> which reads the required data from an XML file -
+in this case <code>./userdata/config.xml</code>. We don’t want to parse that file every
+time, we need the configuration, so we make it a Singleton by using
+<code>$dic-&gt;share()</code> again.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-variable">$dic</span>[<span class="hljs-string">'configuration'</span>] = <span class="hljs-variable">$dic</span>-&gt;share(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
+    <span class="hljs-keyword">return</span> FF::getInstance(
+        <span class="hljs-string">'Core\XmlConfiguration'</span>,
+        USERDATA_DIR.DS.<span class="hljs-string">'config.xml'</span>,
+        <span class="hljs-string">'production'</span>
+    );
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Third, adapters need a <code>Request</code> object. This time, each adapter needs its
+own instance, so we don’t use <code>$dic-&gt;share()</code>. Unless you want to do
+something fancy with your request, you can use one of the request factories
+provided in the library (and, to be honest, even if you do need something
+fancy, you’d be better off writing a new factory).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-variable">$dic</span>[<span class="hljs-string">'request'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-variable">$c</span>[<span class="hljs-string">'requestFactory'</span>]-&gt;getRequest();
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Our definition of the <code>request</code> dependency just added a new dependency: a
+<code>requestFactory</code>. So let’s create that next.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>The library comes with a few different request factories of its own. Here, we
+are using an implementation that realise the connection to the FACT-Finder
+server via cURL’s <em>multi interface</em>, in order to send out all necessary
+requests in parallel. There is also an <code>EasyCurlRequestFactory</code>, which uses
+the <em>easy interface</em> and sends requests sequentially, as well as a
+<code>FileSystemRequestFactory</code>, which is basically a stub and delivers some files
+from your local hard drive instead of going to the FACT-Finder server. The
+latter is, of course, only intended for testing purposes.</p>
+<p>If you want to use neither of the above options but, for instance, use
+sockets for your requests, you can implement the
+<code>Core\Server\RequestFactoryInterface</code> and use it right here.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-variable">$dic</span>[<span class="hljs-string">'requestFactory'</span>] = <span class="hljs-variable">$dic</span>-&gt;share(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
+    <span class="hljs-keyword">return</span> FF::getInstance(
+        <span class="hljs-string">'Core\Server\MultiCurlRequestFactory'</span>,
+        <span class="hljs-variable">$c</span>[<span class="hljs-string">'loggerClass'</span>],
+        <span class="hljs-variable">$c</span>[<span class="hljs-string">'configuration'</span>],
+        <span class="hljs-variable">$c</span>[<span class="hljs-string">'requestParser'</span>]-&gt;getRequestParameters()
+    );
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>The last dependency of adapters is a <code>Client\UrlBuilder</code>. It generates links
+for the rendered page which point back at the <code>index.php</code> with various
+parameters for navigation and search refinement. So let’s create a Singleton
+for that, too.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-variable">$dic</span>[<span class="hljs-string">'clientUrlBuilder'</span>] = <span class="hljs-variable">$dic</span>-&gt;share(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
+    <span class="hljs-keyword">return</span> FF::getInstance(
+        <span class="hljs-string">'Core\Client\UrlBuilder'</span>,
+        <span class="hljs-variable">$c</span>[<span class="hljs-string">'loggerClass'</span>],
+        <span class="hljs-variable">$c</span>[<span class="hljs-string">'configuration'</span>],
+        <span class="hljs-variable">$c</span>[<span class="hljs-string">'requestParser'</span>],
+        <span class="hljs-variable">$c</span>[<span class="hljs-string">'encodingConverter'</span>]
+    );
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>These last two dependencies added two more dependencies again. A
+<code>requestParser</code>and an <code>encodingConverter</code>. Let’s add these as well.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>The <code>Core\Client\RequestParser</code> reads things like query parameters and the
+target out of the current request. In fact, you may want to use this object
+yourself (and the demo does), because it takes care of determining a few
+interesting parameters for you.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-variable">$dic</span>[<span class="hljs-string">'requestParser'</span>] = <span class="hljs-variable">$dic</span>-&gt;share(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
+    <span class="hljs-keyword">return</span> FF::getInstance(
+        <span class="hljs-string">'Core\Client\RequestParser'</span>,
+        <span class="hljs-variable">$c</span>[<span class="hljs-string">'loggerClass'</span>],
+        <span class="hljs-variable">$c</span>[<span class="hljs-string">'configuration'</span>],
+        <span class="hljs-variable">$c</span>[<span class="hljs-string">'encodingConverter'</span>]
+    );
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Lastly, a derived class of <code>Core\AbstractEncodingConverter</code> takes care of
+converting between UTF-8 (used by FACT-Finder and the library) and
+potentially different encodings used on the page and by the client.</p>
+<p>This last dependency shows the true power of using anonymous functions to
+define dependencies. We determine dynamically which conversion functions
+are available and instantiate the appropriate implementation. If the more
+powerful <code>iconv</code> extension is available we’ll use it, but if not we’ll also
+check if we can use <code>utf8_encode</code>/<code>utf8_decode</code> instead.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-variable">$dic</span>[<span class="hljs-string">'encodingConverter'</span>] = <span class="hljs-variable">$dic</span>-&gt;share(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
+    <span class="hljs-keyword">if</span> (extension_loaded(<span class="hljs-string">'iconv'</span>))
+        <span class="hljs-variable">$type</span> = <span class="hljs-string">'Core\IConvEncodingConverter'</span>;
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (function_exists(<span class="hljs-string">'utf8_encode'</span>)
+             &amp;&amp; function_exists(<span class="hljs-string">'utf8_decode'</span>))
+        <span class="hljs-variable">$type</span> = <span class="hljs-string">'Core\Utf8EncodingConverter'</span>;
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> \<span class="hljs-keyword">Exception</span>(<span class="hljs-string">'No encoding conversion available.'</span>);
+
+    <span class="hljs-keyword">return</span> FF::getInstance(
+        <span class="hljs-variable">$type</span>,
+        <span class="hljs-variable">$c</span>[<span class="hljs-string">'loggerClass'</span>],
+        <span class="hljs-variable">$c</span>[<span class="hljs-string">'configuration'</span>]
+    );
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Now we’re set to go and can create the objects we really need.</p>
+
+            </div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

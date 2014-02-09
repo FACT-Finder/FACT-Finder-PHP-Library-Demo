@@ -13,6 +13,10 @@ require_once LIB_DIR.DS.'FACTFinder'.DS.'Loader.php';
 
 use FACTFinder\Loader as FF;
 
+$dic = FF::getInstance('Util\Pimple');
+
+// Load the [initialization script](initialization.html). This is common to all
+// entry-point scripts.
 require_once USERDATA_DIR.DS.'initialization.php';
 
 $suggestAdapter = FF::getInstance(

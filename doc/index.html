@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>index.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="HtmlGenerator.html">
+                HtmlGenerator.php
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.php
+              </a>
+            
+              
+              <a class="source" href="suggest.html">
+                suggest.php
+              </a>
+            
+              
+              <a class="source" href="tracking.html">
+                tracking.php
+              </a>
+            
+              
+              <a class="source" href="initialization.html">
+                initialization.php
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>index.php</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-preprocessor">&lt;?php</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>This is the annotated source code of the <a href="https://github.com/FACT-Finder/FACT-Finder-PHP-Library-Demo">FACT-Finder PHP Library Demo</a>, a minimal example that showcases
+how to use the most recent version of the <a href="https://github.com/FACT-Finder/FACT-Finder-PHP-Library">FACT-Finder PHP Library</a>.</p>
+<p><strong>Note:</strong> The entire library resides in the <code>\FACTFinder</code> namespace, which is
+why that namespace will be omitted in all “fully” qualified class names in
+this documentation.</p>
+<p>There are three different entry-point scripts. <em>index.php</em> (the one you are
+looking at, which handles displaying all pages to the user), <a href="suggest.html"><em>suggest.php</em></a>
+and <a href="tracking.html"><em>tracking.php</em></a> which are called by AJAX requests.</p>
+<p><strong>Here we go:</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">namespace</span> <span class="hljs-title">FACTFinderDemo</span>;
+
+error_reporting(E_ALL );</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Set up constant with a few useful directory names.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define(<span class="hljs-string">'DS'</span>, DIRECTORY_SEPARATOR);
+define(<span class="hljs-string">'DEMO_DIR'</span>, dirname(<span class="hljs-keyword">__FILE__</span>));
+define(<span class="hljs-string">'LIB_DIR'</span>, dirname(DEMO_DIR).DS.<span class="hljs-string">'lib'</span>);
+define(<span class="hljs-string">'TEMPLATE_DIR'</span>, DEMO_DIR.DS.<span class="hljs-string">'templates'</span>);
+define(<span class="hljs-string">'USERDATA_DIR'</span>, DEMO_DIR.DS.<span class="hljs-string">'userdata'</span>);
+define(<span class="hljs-string">'HELPER_DIR'</span>, DEMO_DIR.DS.<span class="hljs-string">'helper'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>As far as the library is concerned we only need to <code>require</code> the
+<code>Loader</code> class. This will take care of loading all necessary
+library files on demand. It mainly provides two static methods, which take a
+fully qualified class name <em>minus the root namespace</em> <code>FACTFinder\</code>:</p>
+<ul>
+<li><code>getInstance()</code> resolves that name, loads the necessary source file
+and instantiates the class for you. Constructor arguments can be passed in
+after the class name.</li>
+<li><code>getClassName()</code> also loads the file, but only gives you a string with the
+fully qualified class name. Use this to call static methods.</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">require_once</span> LIB_DIR.DS.<span class="hljs-string">'FACTFinder'</span>.DS.<span class="hljs-string">'Loader.php'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>The <code>HtmlGenerator</code> is only part of the demo, so we still have to load it
+manually.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">require_once</span> HELPER_DIR.DS.<span class="hljs-string">'HtmlGenerator.php'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>We’ll be using the <code>Loader</code> class a lot, so we define a short alias.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">use</span> <span class="hljs-title">FACTFinder</span>\<span class="hljs-title">Loader</span> <span class="hljs-title">as</span> <span class="hljs-title">FF</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>To wire up all the necessary library objects, we are using the dependency
+injection container (DIC) <a href="https://github.com/fabpot/Pimple">Pimple</a>.
+Basically, for each dependency we create an anonymous function that describes
+how the dependency is created. We can either just store this in the DIC - in
+which case it will be called every time needs an instance of the dependency -
+or we can first pass our anonymous funcion to <code>$dic-&gt;share()</code>, which
+basically makes the dependency a Singleton. Please refer to Pimple’s
+documentation for more information on its usage.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Note that we provide Pimple as part of the library, such that we can load it
+via <code>FF</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-variable">$dic</span> = FF::getInstance(<span class="hljs-string">'Util\Pimple'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Load the <a href="initialization.html">initialization script</a> to populate the DIC.
+This is common to all entry-point scripts. We extract this into a separate
+script in <code>./userdata</code>, because it is basically a programmatic configuration
+of the library.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">require_once</span> USERDATA_DIR.DS.<span class="hljs-string">'initialization.php'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Now we create the necessary adapters. We need one adapter for each action we
+want to query from the FACT-Finder server. Currently, the demo only performs
+a search and displays a tag cloud, so we only need two adapters.</p>
+<p><a name="adapter-dependencies"></a>
+Each adapter has four dependencies:</p>
+<ul>
+<li>The class name of the logger it should use. This class has to implement
+<code>Util\LoggerInterface</code></li>
+<li>The configuration object to use. This should implement
+<code>ConfigurationInterface</code></li>
+<li>A <code>Request</code> object. The adapter will use this object to communicate with the
+FACT-Finder server. You can obtain one of these from a class implementing
+the <code>Core\Server\RequestFactoryInterface</code>.</li>
+<li>A <code>Client\UrlBuilder</code> which it will use generate links on the
+page.</li>
+</ul>
+<p>These dependencies have been created in the initialization script, so that we
+can simply pull them from the DIC.</p>
+<p>In most cases this is all the configuration the adapters need, because the
+<code>request</code> is pre-populated with parameters from the client request which
+usually contains everything the adapters need.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-variable">$searchAdapter</span> = FF::getInstance(
+    <span class="hljs-string">'Adapter\Search'</span>,
+    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'loggerClass'</span>],
+    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'configuration'</span>],
+    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'request'</span>],
+    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'clientUrlBuilder'</span>]
+);
+
+<span class="hljs-variable">$tagCloudAdapter</span> = FF::getInstance(
+    <span class="hljs-string">'Adapter\TagCloud'</span>,
+    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'loggerClass'</span>],
+    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'configuration'</span>],
+    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'request'</span>],
+    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'clientUrlBuilder'</span>]
+);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Now we use the demo’s <a href="HtmlGenerator.html">HtmlGenerator</a> to actually render
+the requested page.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-variable">$htmlGenerator</span> = <span class="hljs-keyword">new</span> Helper\HtmlGenerator(
+    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'loggerClass'</span>],
+    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'configuration'</span>],
+    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'requestParser'</span>],
+    <span class="hljs-variable">$searchAdapter</span>,
+    <span class="hljs-variable">$tagCloudAdapter</span>,
+    TEMPLATE_DIR
+);
+
+<span class="hljs-variable">$output</span> = <span class="hljs-variable">$htmlGenerator</span>-&gt;getHtmlCode();
+<span class="hljs-keyword">echo</span> <span class="hljs-variable">$output</span>;</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
