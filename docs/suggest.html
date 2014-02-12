@@ -66,8 +66,24 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-preprocessor">&lt;?php</span>
-<span class="hljs-keyword">namespace</span> <span class="hljs-title">FACTFinderDemo</span>;
+            <div class="content"><div class='highlight'><pre><span class="hljs-preprocessor">&lt;?php</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>This script is queried via AJAX when the user starts typing into the search
+box.</p>
+<p>The initial setup code is identical to that in <a href="index.html">index.php</a>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">namespace</span> <span class="hljs-title">FACTFinderDemo</span>;
 
 error_reporting(<span class="hljs-number">0</span>);
 
@@ -86,28 +102,62 @@ define(<span class="hljs-string">'USERDATA_DIR'</span>, DEMO_DIR.DS.<span class=
         </li>
         
         
-        <li id="section-2">
+        <li id="section-3">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
+                <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
               <p>Load the <a href="initialization.html">initialization script</a>. This is common to all
-entry-point scripts.</p>
+entry-point scripts. We extract this into a separate
+script in <code>./userdata</code>, because it is basically a programmatic configuration
+of the library.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">require_once</span> USERDATA_DIR.DS.<span class="hljs-string">'initialization.php'</span>;
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">require_once</span> USERDATA_DIR.DS.<span class="hljs-string">'initialization.php'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>We only need on Suggest adapter here.</p>
 
-<span class="hljs-variable">$suggestAdapter</span> = FF::getInstance(
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-variable">$suggestAdapter</span> = FF::getInstance(
     <span class="hljs-string">'Adapter\Suggest'</span>,
     <span class="hljs-variable">$dic</span>[<span class="hljs-string">'loggerClass'</span>],
     <span class="hljs-variable">$dic</span>[<span class="hljs-string">'configuration'</span>],
-    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'requestFactory'</span>]-&gt;getRequest(),
+    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'request'</span>],
     <span class="hljs-variable">$dic</span>[<span class="hljs-string">'clientUrlBuilder'</span>]
-);
+);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Note that we don’t need to configure the adapter any further. The <code>Request</code>
+object it gets is pre-populated with all parameters passed to this script.
+We rely on the fact that those parameters contain all necessary
+configuration.</p>
+<p>If possible we simply pass through the raw data obtained from FACT-Finder
+without any further processing. This is because FACT-Finder generates JSONP
+output which will be processed by the frontend instead of the library.</p>
 
-<span class="hljs-keyword">try</span> {
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">try</span> {
 	<span class="hljs-keyword">echo</span> <span class="hljs-variable">$suggestAdapter</span>-&gt;getRawSuggestions();
 } <span class="hljs-keyword">catch</span> (\<span class="hljs-keyword">Exception</span> <span class="hljs-variable">$e</span>) {
 	<span class="hljs-keyword">if</span> (!headers_sent()) {</pre></div></div>
@@ -115,11 +165,11 @@ entry-point scripts.</p>
         </li>
         
         
-        <li id="section-3">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>close connection to browser if that is possible</p>
 
@@ -135,11 +185,11 @@ entry-point scripts.</p>
         </li>
         
         
-        <li id="section-4">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>log error</p>
 
@@ -153,11 +203,11 @@ entry-point scripts.</p>
         </li>
         
         
-        <li id="section-5">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>*/</p>
 
