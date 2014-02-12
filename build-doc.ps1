@@ -25,7 +25,7 @@ git checkout master
 # Build and commit documentation
 
 docco -o docs .\demo\index.php .\demo\suggest.php .\demo\tracking.php `
-              .\demo\userdata\initialization.php .\demo\helper\HtmlGenerator.php
+              .\demo\userdata\initialization.php
 
 git add --all docs
 git commit -m "Update documentation"
