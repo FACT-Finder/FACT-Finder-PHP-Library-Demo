@@ -20,6 +20,8 @@ Push-Location $dir
 $branch = git status | Select-String -Pattern "On branch (.*)" -List `
     | %{$_.matches[0].groups[1].value}
 
+git stash
+
 git checkout master
 
 # Build and commit documentation

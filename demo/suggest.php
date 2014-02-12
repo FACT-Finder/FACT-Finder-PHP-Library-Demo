@@ -20,9 +20,8 @@ use FACTFinder\Loader as FF;
 $dic = FF::getInstance('Util\Pimple');
 
 // Load the [initialization script](initialization.html). This is common to all
-// entry-point scripts. We extract this into a separate
-// script in `./userdata`, because it is basically a programmatic configuration
-// of the library.
+// entry-point scripts. We extract this into a separate script in `./userdata`,
+// because it is basically a programmatic configuration of the library
 require_once USERDATA_DIR.DS.'initialization.php';
 
 // We only need on Suggest adapter here.
