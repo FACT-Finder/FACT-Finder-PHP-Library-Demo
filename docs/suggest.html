@@ -160,60 +160,19 @@ output which will be processed by the frontend instead of the library.</p>
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">try</span> {
 	<span class="hljs-keyword">echo</span> <span class="hljs-variable">$suggestAdapter</span>-&gt;getRawSuggestions();
 } <span class="hljs-keyword">catch</span> (\<span class="hljs-keyword">Exception</span> <span class="hljs-variable">$e</span>) {
-	<span class="hljs-keyword">if</span> (!headers_sent()) {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-6">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
-              </div>
-              <p>close connection to browser if that is possible</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>		header(<span class="hljs-string">"Content-Length: 0"</span>);
+	<span class="hljs-keyword">if</span> (!headers_sent()) {
+		<span class="hljs-comment">/* close connection to browser if that is possible */</span>
+		header(<span class="hljs-string">"Content-Length: 0"</span>);
 		header(<span class="hljs-string">"Connection: close"</span>);
 		flush();
 
 		<span class="hljs-comment">/* if you want, you can log errors here. this will not cause the user to wait for the request * /
-</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-7">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
-              </div>
-              <p>log error</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>		<span class="hljs-variable">$logfile</span> = <span class="hljs-string">"suggest.error.log"</span>;
-		<span class="hljs-variable">$f</span> = fopen(<span class="hljs-variable">$logfile</span>, <span class="hljs-string">'a'</span>);
-		fwrite(<span class="hljs-variable">$f</span>, date(DATE_RFC822).<span class="hljs-string">': error ['</span>.<span class="hljs-variable">$e</span>-&gt;getMessage().<span class="hljs-string">'] for search request ['</span>.<span class="hljs-variable">$dataProvider</span>-&gt;getAuthenticationUrl().<span class="hljs-string">"]\n"</span>);
-		fclose(<span class="hljs-variable">$f</span>);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-8">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
-              </div>
-              <p>*/</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>	}
+		$logfile = "suggest.error.log";
+		$f = fopen($logfile, 'a');
+		fwrite($f, date(DATE_RFC822).': error ['.$e-&gt;getMessage().'] for search request ['.$dataProvider-&gt;getAuthenticationUrl()."]\n");
+		fclose($f);
+		/* */</span>
+	}
 }</pre></div></div>
             
         </li>
