@@ -1,6 +1,8 @@
-# This script assumes that the 'master' branch is up-to-date and does not have
-# uncommitted changes. Note that it will immediately commit the new doc into
-# both the 'master' and the 'gh-pages' branch but will not push the branches.
+# This script assumes that the 'master' branch is up-to-date and that the branch
+# you are currently on (if different from 'master') has no uncommitted changes.
+# Note that it will immediately commit the new doc into both the 'master' and
+# the 'gh-pages' branch but will not push the branches.
+#
 # You'll need node.js and docco to build the documentation. If you don't have
 # docco yet, you can install it via
 #
@@ -28,6 +30,8 @@ docco -o docs .\demo\index.php .\demo\suggest.php .\demo\tracking.php `
 git add --all docs
 git commit -m "Update documentation"
 
+git stash
+
 # Merge new doc into GitHub pages branch
 
 git checkout gh-pages
@@ -36,5 +40,7 @@ git cherry-pick master
 # Move back to original branch
 
 git checkout $branch
+
+git stash pop
 
 Pop-Location
