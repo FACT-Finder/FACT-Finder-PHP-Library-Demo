@@ -522,9 +522,7 @@ If so, exit the <code>try</code> block with an appropriate exception.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-variable">$campaigns</span> = <span class="hljs-variable">$searchAdapter</span>-&gt;getCampaigns();
-    <span class="hljs-keyword">if</span> (<span class="hljs-variable">$campaigns</span>-&gt;hasRedirect()) {
-        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RedirectException(<span class="hljs-variable">$campaigns</span>-&gt;getRedirectUrl());
-    }</pre></div></div>
+    <span class="hljs-keyword">if</span> (<span class="hljs-variable">$campaigns</span>-&gt;hasRedirect()) {</pre></div></div>
             
         </li>
         
@@ -534,6 +532,27 @@ If so, exit the <code>try</code> block with an appropriate exception.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>throw new RedirectException($campaigns-&gt;getRedirectUrl());</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-variable">$url</span> = <span class="hljs-variable">$campaigns</span>-&gt;getRedirectUrl();
+        <span class="hljs-keyword">if</span> (!headers_sent())
+            header(<span class="hljs-string">'Location: '</span>.<span class="hljs-variable">$url</span>);
+        <span class="hljs-keyword">else</span>
+            <span class="hljs-keyword">die</span>(<span class="hljs-string">'&lt;meta http-equiv="refresh" content="0; URL='</span>
+               . <span class="hljs-variable">$url</span> . <span class="hljs-string">'"&gt; &lt;a href="'</span> . <span class="hljs-variable">$url</span> . <span class="hljs-string">'"&gt;&lt;/a&gt;'</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>Now we’ll save all the data from our adapters into corresponding
 variables. The templates will then use these to render the page.</p>
@@ -559,73 +578,24 @@ variables. The templates will then use these to render the page.</p>
         </li>
         
         
-        <li id="section-27">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
-              </div>
-              <p>Depending on the status of search, render the appropriate
-template. There are three different “root” templates (i.e.
-templates, which include the entire <code>&lt;html&gt;</code>-tree):</p>
-<ul>
-<li><code>index.phtml</code> is for actual search results.</li>
-<li><code>noMatch.phtml</code> is for successful searches that did not yield
-any results.</li>
-<li><code>error.phtml</code> is for all kinds of problems which may have
-occurred.</li>
-</ul>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">switch</span> (<span class="hljs-variable">$status</span>) {
-        <span class="hljs-keyword">case</span> <span class="hljs-variable">$searchStatusEnum</span>::RecordsFound():
-            <span class="hljs-variable">$trackingEvents</span>[<span class="hljs-string">'display'</span>] = <span class="hljs-keyword">array</span>();
-            <span class="hljs-keyword">include</span> <span class="hljs-variable">$helper</span>-&gt;getTemplate(<span class="hljs-string">'index'</span>);
-            <span class="hljs-keyword">break</span>;
-        <span class="hljs-keyword">case</span> <span class="hljs-variable">$searchStatusEnum</span>::EmptyResult():
-            <span class="hljs-variable">$message</span> = <span class="hljs-string">'No result for &lt;strong&gt;"'</span>
-                     . htmlspecialchars(<span class="hljs-variable">$searchParameters</span>-&gt;getQuery())
-                     . <span class="hljs-string">'"&lt;/strong&gt;'</span>;
-            <span class="hljs-keyword">include</span> <span class="hljs-variable">$helper</span>-&gt;getTemplate(<span class="hljs-string">'noMatch'</span>);
-            <span class="hljs-keyword">break</span>;
-        <span class="hljs-keyword">case</span> <span class="hljs-variable">$searchStatusEnum</span>::NoResult():
-            <span class="hljs-variable">$error</span> = <span class="hljs-string">'No result - an error occurred...'</span>;
-            <span class="hljs-keyword">include</span> <span class="hljs-variable">$helper</span>-&gt;getTemplate(<span class="hljs-string">'error'</span>);
-            <span class="hljs-keyword">break</span>;
-        <span class="hljs-keyword">default</span>:
-            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">Exception</span>(<span class="hljs-string">'No result (unknown status)'</span>);
-    }
-} <span class="hljs-keyword">catch</span> (\<span class="hljs-keyword">Exception</span> <span class="hljs-variable">$e</span>) {</pre></div></div>
-            
-        </li>
-        
-        
         <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
-              <p>This is some code duplication from the above <code>switch</code> statement
-and handles different exceptions by doing a redirect or rendering
-the appropriate template.</p>
+              <p>If an exception occurred, manually select a search status so that the
+appropriate template will be rendered.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-variable">$e</span> <span class="hljs-keyword">instanceof</span> RedirectException) {
-        <span class="hljs-variable">$url</span> = <span class="hljs-variable">$e</span>-&gt;getMessage();
-        <span class="hljs-keyword">if</span> (!headers_sent())
-            header(<span class="hljs-string">'Location: '</span>.<span class="hljs-variable">$url</span>);
-        <span class="hljs-keyword">else</span>
-            <span class="hljs-keyword">echo</span> <span class="hljs-string">'&lt;meta http-equiv="refresh" content="0; URL='</span>
-               . <span class="hljs-variable">$url</span> . <span class="hljs-string">'"&gt; &lt;a href="'</span> . <span class="hljs-variable">$url</span> . <span class="hljs-string">'"&gt;&lt;/a&gt;'</span>;
-    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-variable">$e</span> <span class="hljs-keyword">instanceof</span> NoQueryException) {
+            <div class="content"><div class='highlight'><pre>} <span class="hljs-keyword">catch</span> (\<span class="hljs-keyword">Exception</span> <span class="hljs-variable">$e</span>) {
+    <span class="hljs-keyword">if</span>(<span class="hljs-variable">$e</span> <span class="hljs-keyword">instanceof</span> NoQueryException) {
         <span class="hljs-variable">$message</span> = <span class="hljs-string">'Please enter a search query'</span>;
-        <span class="hljs-keyword">include</span> <span class="hljs-variable">$helper</span>-&gt;getTemplate(<span class="hljs-string">'noMatch'</span>);
+        <span class="hljs-variable">$status</span> = <span class="hljs-variable">$searchStatusEnum</span>::EmptyResult();
     } <span class="hljs-keyword">else</span> {
         <span class="hljs-variable">$error</span> = <span class="hljs-variable">$e</span>-&gt;getMessage();
-        <span class="hljs-keyword">include</span> <span class="hljs-variable">$helper</span>-&gt;getTemplate(<span class="hljs-string">'error'</span>);
+        <span class="hljs-variable">$status</span> = <span class="hljs-variable">$searchStatusEnum</span>::NoResult();
     }
 }</pre></div></div>
             
@@ -637,6 +607,61 @@ the appropriate template.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <h2 id="rendering-the-page">Rendering the page</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>Depending on the status of search, render the appropriate
+template. There are three different “root” templates (i.e.
+templates, which include the entire <code>&lt;html&gt;</code>-tree):</p>
+<ul>
+<li><code>index.phtml</code> is for actual search results.</li>
+<li><code>noMatch.phtml</code> is for successful searches that did not yield
+any results or if no search was attempted at all.</li>
+<li><code>error.phtml</code> is for all kinds of problems which may have
+occurred.</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">switch</span> (<span class="hljs-variable">$status</span>) {
+    <span class="hljs-keyword">case</span> <span class="hljs-variable">$searchStatusEnum</span>::RecordsFound():
+        <span class="hljs-variable">$trackingEvents</span>[<span class="hljs-string">'display'</span>] = <span class="hljs-keyword">array</span>();
+        <span class="hljs-keyword">include</span> <span class="hljs-variable">$helper</span>-&gt;getTemplate(<span class="hljs-string">'index'</span>);
+        <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> <span class="hljs-variable">$searchStatusEnum</span>::EmptyResult():
+        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$message</span>))
+            <span class="hljs-variable">$message</span> = <span class="hljs-string">'No result for &lt;strong&gt;"'</span>
+                     . htmlspecialchars(<span class="hljs-variable">$searchParameters</span>-&gt;getQuery())
+                     . <span class="hljs-string">'"&lt;/strong&gt;'</span>;
+        <span class="hljs-keyword">include</span> <span class="hljs-variable">$helper</span>-&gt;getTemplate(<span class="hljs-string">'noMatch'</span>);
+        <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> <span class="hljs-variable">$searchStatusEnum</span>::NoResult():
+    <span class="hljs-keyword">default</span>:
+        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$error</span>))
+            <span class="hljs-variable">$error</span> = <span class="hljs-string">'No result - an error occurred...'</span>;
+        <span class="hljs-keyword">include</span> <span class="hljs-variable">$helper</span>-&gt;getTemplate(<span class="hljs-string">'error'</span>);
+        <span class="hljs-keyword">break</span>;
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <p>Finally, clean the buffer echo its contents. This string will contain the
 entire HTML page.</p>
