@@ -16,7 +16,7 @@
 		<script language="JavaScript" type="text/javascript" src="./files/js/demoshop/demoshop.js"></script>
 
 		<script language="JavaScript" type="text/javascript">
-			<?php include $this->getTemplate('js/extratracking.js'); ?>
+			<?php include $helper->getTemplate('js/extratracking.js'); ?>
 		</script>
 
 		<?php echo $campaigns->getFeedback('html header'); ?>
@@ -25,12 +25,12 @@
 		<script type="text/javascript" src="./files/js/wz_tooltip/wz_tooltip.js"></script>
 		<div id="container" >
 			<div id="header">
-				<?php include $this->getTemplate('header'); ?>
+				<?php include $helper->getTemplate('header'); ?>
 			</div>
 
 			<div id="searchboxLine" class="asnHint">
 				<div id="searchbox">
-					<?php include $this->getTemplate('searchbox'); ?>
+					<?php include $helper->getTemplate('searchbox'); ?>
 				</div>
 
 				<div id="SearchboxCMPlaceHolder">
@@ -42,13 +42,13 @@
 				<div id="asnColumn" class="asnHintEN" >
 					<?php echo $campaigns->getFeedback('above asn'); ?>
 
-					<?php include $this->getTemplate('asn'); ?>
+					<?php include $helper->getTemplate('asn'); ?>
 
 					<?php echo $campaigns->getFeedback('below asn'); ?>
 				</div>
 
 				<div id="resultColumn">
-					<?php include $this->getTemplate('body'); ?>
+					<?php include $helper->getTemplate('body'); ?>
 				</div>
 
 				<div id="infoColumn">
@@ -60,7 +60,7 @@
 
 							<?php
 								foreach ($campaigns->getPushedProducts() AS $record) {
-									include $this->getTemplate('product');
+									include $helper->getTemplate('product');
 								}
 							?>
 
@@ -68,13 +68,13 @@
 					<?php } ?>
 
 					<?php if (isset($tagCloud) && !empty($tagCloud)) {
-						include $this->getTemplate('tagCloud');
+						include $helper->getTemplate('tagCloud');
 					} ?>
 						<div class="clear">&nbsp;</div>
 				</div>
 			</div>
 			<div id="footer">
-				<?php include $this->getTemplate('footer'); ?>
+				<?php include $helper->getTemplate('footer'); ?>
 			</div>
 		</div>
 	</body>

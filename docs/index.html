@@ -289,9 +289,7 @@ usually contains everything the adapters need.</p>
     <span class="hljs-variable">$dic</span>[<span class="hljs-string">'configuration'</span>],
     <span class="hljs-variable">$dic</span>[<span class="hljs-string">'request'</span>],
     <span class="hljs-variable">$dic</span>[<span class="hljs-string">'clientUrlBuilder'</span>]
-);
-
-<span class="hljs-comment">## Preparing the data</span></pre></div></div>
+);</pre></div></div>
             
         </li>
         
@@ -302,9 +300,7 @@ usually contains everything the adapters need.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
-              <p>We will now fill a bunch of variables which we can use in the
-templates later on. Most of these variables will be the results from
-our requests to the FACT-Finder server (obtained by the adapters).</p>
+              <h2 id="preparing-the-data">Preparing the data</h2>
 
             </div>
             
@@ -317,11 +313,11 @@ our requests to the FACT-Finder server (obtained by the adapters).</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
-              <p>We’ll need the encoding for rendering the <code>Content-Type</code> meta-tag.</p>
+              <p>We will now fill a bunch of variables which we can use in the
+templates later on. Most of these variables will be the results from
+our requests to the FACT-Finder server (obtained by the adapters).</p>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre><span class="hljs-variable">$encoding</span> = <span class="hljs-variable">$dic</span>[<span class="hljs-string">'configuration'</span>]-&gt;getPageContentEncoding();</pre></div></div>
             
         </li>
         
@@ -331,6 +327,21 @@ our requests to the FACT-Finder server (obtained by the adapters).</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>We’ll need the encoding for rendering the <code>Content-Type</code> meta-tag.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-variable">$encoding</span> = <span class="hljs-variable">$dic</span>[<span class="hljs-string">'configuration'</span>]-&gt;getPageContentEncoding();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p>This object provides convenient access to several important query
 parameters relating to actual search.</p>
@@ -345,11 +356,11 @@ parameters relating to actual search.</p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <p>We’ll need the target for the action of the search box form.</p>
 
@@ -362,11 +373,11 @@ parameters relating to actual search.</p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>Get or start a session. This is needed for the tracking. If it’s
 a new session, mark that event for tracking.</p>
@@ -386,11 +397,11 @@ a new session, mark that event for tracking.</p>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>The library contains a few “enums” (of course, PHP does not have
 enums, but we’ve tried to work around them as closely as possible).
@@ -404,29 +415,34 @@ enum’s class name.</p>
         </li>
         
         
-        <li id="section-19">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
-              </div>
-              <p>This function can be used here and in templates get the file names of other
-templates.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getTemplate</span><span class="hljs-params">(<span class="hljs-variable">$name</span>)</span> {</span>
-    <span class="hljs-keyword">return</span> TEMPLATE_DIR.DS.<span class="hljs-variable">$name</span>.<span class="hljs-string">'.phtml'</span>;
-}</pre></div></div>
-            
-        </li>
-        
-        
         <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>This class provides functions to the included templates. <em>For some reason
+we cannot call global functions directly in included files. Until this is
+resolved we have to access such functions through a class instance.</em></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Helper</span> {</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getTemplate</span><span class="hljs-params">(<span class="hljs-variable">$name</span>)</span> {</span>
+        <span class="hljs-keyword">return</span> TEMPLATE_DIR.DS.<span class="hljs-variable">$name</span>.<span class="hljs-string">'.phtml'</span>;
+    }
+}
+
+<span class="hljs-variable">$helper</span> = <span class="hljs-keyword">new</span> Helper();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>We also define two exceptions for the following try-catch statement.</p>
 
@@ -438,11 +454,11 @@ templates.</p>
         </li>
         
         
-        <li id="section-21">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>Activate the output buffer, so that we don’t render immediately to
 the response.</p>
@@ -454,11 +470,11 @@ the response.</p>
         </li>
         
         
-        <li id="section-22">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>We slightly abuse exception handling for flow control here. If all
 goes well, the entire page will be rendered in the <code>try</code> block.
@@ -473,11 +489,11 @@ appropriate <code>catch</code> blocks.</p>
         </li>
         
         
-        <li id="section-23">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>Don’t even attempt a search if there is no search query.</p>
 
@@ -494,11 +510,11 @@ appropriate <code>catch</code> blocks.</p>
         </li>
         
         
-        <li id="section-24">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>Get the campaigns first, because they might contain a redirect.
 If so, exit the <code>try</code> block with an appropriate exception.</p>
@@ -513,11 +529,11 @@ If so, exit the <code>try</code> block with an appropriate exception.</p>
         </li>
         
         
-        <li id="section-25">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Now we’ll save all the data from our adapters into corresponding
 variables. The templates will then use these to render the page.</p>
@@ -543,11 +559,11 @@ variables. The templates will then use these to render the page.</p>
         </li>
         
         
-        <li id="section-26">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>Depending on the status of search, render the appropriate
 template. There are three different “root” templates (i.e.
@@ -565,17 +581,17 @@ occurred.</li>
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">switch</span> (<span class="hljs-variable">$status</span>) {
         <span class="hljs-keyword">case</span> <span class="hljs-variable">$searchStatusEnum</span>::RecordsFound():
             <span class="hljs-variable">$trackingEvents</span>[<span class="hljs-string">'display'</span>] = <span class="hljs-keyword">array</span>();
-            <span class="hljs-keyword">include</span> getTemplate(<span class="hljs-string">'index'</span>);
+            <span class="hljs-keyword">include</span> <span class="hljs-variable">$helper</span>-&gt;getTemplate(<span class="hljs-string">'index'</span>);
             <span class="hljs-keyword">break</span>;
         <span class="hljs-keyword">case</span> <span class="hljs-variable">$searchStatusEnum</span>::EmptyResult():
             <span class="hljs-variable">$message</span> = <span class="hljs-string">'No result for &lt;strong&gt;"'</span>
                      . htmlspecialchars(<span class="hljs-variable">$searchParameters</span>-&gt;getQuery())
                      . <span class="hljs-string">'"&lt;/strong&gt;'</span>;
-            <span class="hljs-keyword">include</span> getTemplate(<span class="hljs-string">'noMatch'</span>);
+            <span class="hljs-keyword">include</span> <span class="hljs-variable">$helper</span>-&gt;getTemplate(<span class="hljs-string">'noMatch'</span>);
             <span class="hljs-keyword">break</span>;
         <span class="hljs-keyword">case</span> <span class="hljs-variable">$searchStatusEnum</span>::NoResult():
             <span class="hljs-variable">$error</span> = <span class="hljs-string">'No result - an error occurred...'</span>;
-            <span class="hljs-keyword">include</span> getTemplate(<span class="hljs-string">'error'</span>);
+            <span class="hljs-keyword">include</span> <span class="hljs-variable">$helper</span>-&gt;getTemplate(<span class="hljs-string">'error'</span>);
             <span class="hljs-keyword">break</span>;
         <span class="hljs-keyword">default</span>:
             <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">Exception</span>(<span class="hljs-string">'No result (unknown status)'</span>);
@@ -585,11 +601,11 @@ occurred.</li>
         </li>
         
         
-        <li id="section-27">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>This is some code duplication from the above <code>switch</code> statement
 and handles different exceptions by doing a redirect or rendering
@@ -606,28 +622,28 @@ the appropriate template.</p>
                . <span class="hljs-variable">$url</span> . <span class="hljs-string">'"&gt; &lt;a href="'</span> . <span class="hljs-variable">$url</span> . <span class="hljs-string">'"&gt;&lt;/a&gt;'</span>;
     } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-variable">$e</span> <span class="hljs-keyword">instanceof</span> NoQueryException) {
         <span class="hljs-variable">$message</span> = <span class="hljs-string">'Please enter a search query'</span>;
-        <span class="hljs-keyword">include</span> getTemplate(<span class="hljs-string">'noMatch'</span>);
+        <span class="hljs-keyword">include</span> <span class="hljs-variable">$helper</span>-&gt;getTemplate(<span class="hljs-string">'noMatch'</span>);
     } <span class="hljs-keyword">else</span> {
         <span class="hljs-variable">$error</span> = <span class="hljs-variable">$e</span>-&gt;getMessage();
-        <span class="hljs-keyword">include</span> getTemplate(<span class="hljs-string">'error'</span>);
+        <span class="hljs-keyword">include</span> <span class="hljs-variable">$helper</span>-&gt;getTemplate(<span class="hljs-string">'error'</span>);
     }
 }</pre></div></div>
             
         </li>
         
         
-        <li id="section-28">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p>Finally, clean the buffer echo its contents. This string will contain the
 entire HTML page.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-variable">$output</span> ob_get_clean();
+            <div class="content"><div class='highlight'><pre><span class="hljs-variable">$output</span> = ob_get_clean();
 <span class="hljs-keyword">echo</span> <span class="hljs-variable">$output</span>;</pre></div></div>
             
         </li>

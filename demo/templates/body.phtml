@@ -78,15 +78,15 @@
 
 	// sorting and paging or info text, if navigation is enabled
 	if (isset($result) && count($result) > 0 && !$searchParameters->isNavigationEnabled()) {
-		include $this->getTemplate('sorting');
+		include $helper->getTemplate('sorting');
 
-		include $this->getTemplate('paging');
+		include $helper->getTemplate('paging');
 
 	} else {
 		echo '<div class="paging browseTop">Select a category to see the products in it.</div>';
 	}
 
-	include $this->getTemplate('previewImageAsn');
+	include $helper->getTemplate('previewImageAsn');
 
 	echo '<div id="results">'; // result body
 
@@ -97,7 +97,7 @@
 		echo '<div id="pushedProducts">
 				<p>Our Topsellers</p>';
 		foreach ($campaigns->getPushedProducts() AS $record) {
-			include $this->getTemplate('product');
+			include $helper->getTemplate('product');
 		}
 		echo '</div>
 			<div class="clear">&nbsp;</div>';
@@ -106,7 +106,7 @@
 	// results
 	echo '<div id="resultWrap">';
 	foreach($result AS $record) {
-		include $this->getTemplate('product');
+		include $helper->getTemplate('product');
 	}
 	echo '</div>';
 
@@ -116,7 +116,7 @@
 
 	// show products per page and paging
 	if (isset($result) && count($result) > 0 && !$searchParameters->isNavigationEnabled()) {
-		include $this->getTemplate('paging');
+		include $helper->getTemplate('paging');
 
 		echo '<div class="optionBox">
 			<select onchange="document.location.href=this.value;" />';

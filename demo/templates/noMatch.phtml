@@ -20,12 +20,12 @@
 
 		<div id="container" >
 			<div id="header">
-				<?php include $this->getTemplate('header'); ?>
+				<?php include $helper->getTemplate('header'); ?>
 			</div>
 
 			<div id="searchboxLine">
 				<div id="searchbox">
-					<?php include $this->getTemplate('searchbox'); ?>
+					<?php include $helper->getTemplate('searchbox'); ?>
 				</div>
 				<div id="SearchboxCMPlaceHolder">
 					<?php if (isset($campaigns)) echo $campaigns->getFeedback('header'); ?>
@@ -76,7 +76,7 @@
 						<div id="pushedProducts">
 							<?php
 								foreach ($campaigns->getPushedProducts() AS $record) {
-									include $this->getTemplate('product');
+									include $helper->getTemplate('product');
 								}
 							?>
 						</div>
@@ -91,7 +91,7 @@
 				</div>
 		 	</div>
 		 	<div id="footer">
-				<?php include $this->getTemplate('footer'); ?>
+				<?php include $helper->getTemplate('footer'); ?>
 			</div>
 		</div>
 	</body>

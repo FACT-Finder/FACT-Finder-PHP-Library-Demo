@@ -103,7 +103,7 @@ $tagCloudAdapter = FF::getInstance(
     $dic['clientUrlBuilder']
 );
 
-## Preparing the data
+// ## Preparing the data
 
 // We will now fill a bunch of variables which we can use in the
 // templates later on. Most of these variables will be the results from
@@ -142,11 +142,16 @@ if ($sid === '') {
 // enum's class name.
 $searchStatusEnum = FF::getClassName('Data\SearchStatus');
 
-// This function can be used here and in templates get the file names of other
-// templates.
-function getTemplate($name) {
-    return TEMPLATE_DIR.DS.$name.'.phtml';
+// This class provides functions to the included templates. *For some reason
+// we cannot call global functions directly in included files. Until this is
+// resolved we have to access such functions through a class instance.*
+class Helper {
+    public function getTemplate($name) {
+        return TEMPLATE_DIR.DS.$name.'.phtml';
+    }
 }
+
+$helper = new Helper();
 
 // We also define two exceptions for the following try-catch statement.
 class NoQueryException extends \Exception{}
@@ -208,17 +213,17 @@ try {
     switch ($status) {
         case $searchStatusEnum::RecordsFound():
             $trackingEvents['display'] = array();
-            include getTemplate('index');
+            include $helper->getTemplate('index');
             break;
         case $searchStatusEnum::EmptyResult():
             $message = 'No result for <strong>"'
                      . htmlspecialchars($searchParameters->getQuery())
                      . '"</strong>';
-            include getTemplate('noMatch');
+            include $helper->getTemplate('noMatch');
             break;
         case $searchStatusEnum::NoResult():
             $error = 'No result - an error occurred...';
-            include getTemplate('error');
+            include $helper->getTemplate('error');
             break;
         default:
             throw new Exception('No result (unknown status)');
@@ -236,13 +241,13 @@ try {
                . $url . '"> <a href="' . $url . '"></a>';
     } else if($e instanceof NoQueryException) {
         $message = 'Please enter a search query';
-        include getTemplate('noMatch');
+        include $helper->getTemplate('noMatch');
     } else {
         $error = $e->getMessage();
-        include getTemplate('error');
+        include $helper->getTemplate('error');
     }
 }
 // Finally, clean the buffer echo its contents. This string will contain the
 // entire HTML page.
-$output ob_get_clean();
+$output = ob_get_clean();
 echo $output;
