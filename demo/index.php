@@ -180,7 +180,13 @@ try {
     // If so, exit the `try` block with an appropriate exception.
     $campaigns = $searchAdapter->getCampaigns();
     if ($campaigns->hasRedirect()) {
-        throw new RedirectException($campaigns->getRedirectUrl());
+        //throw new RedirectException($campaigns->getRedirectUrl());
+        $url = $campaigns->getRedirectUrl();
+        if (!headers_sent())
+            header('Location: '.$url);
+        else
+            die('<meta http-equiv="refresh" content="0; URL='
+               . $url . '"> <a href="' . $url . '"></a>');
     }
 
     // Now we'll save all the data from our adapters into corresponding
@@ -201,52 +207,49 @@ try {
 
     /*$util = FF::getInstance('util', $searchAdapter);*/
 
-    // Depending on the status of search, render the appropriate
-    // template. There are three different "root" templates (i.e.
-    // templates, which include the entire `<html>`-tree):
-    //
-    // - `index.phtml` is for actual search results.
-    // - `noMatch.phtml` is for successful searches that did not yield
-    //   any results.
-    // - `error.phtml` is for all kinds of problems which may have
-    //   occurred.
-    switch ($status) {
-        case $searchStatusEnum::RecordsFound():
-            $trackingEvents['display'] = array();
-            include $helper->getTemplate('index');
-            break;
-        case $searchStatusEnum::EmptyResult():
+// If an exception occurred, manually select a search status so that the
+// appropriate template will be rendered.
+} catch (\Exception $e) {
+    if($e instanceof NoQueryException) {
+        $message = 'Please enter a search query';
+        $status = $searchStatusEnum::EmptyResult();
+    } else {
+        $error = $e->getMessage();
+        $status = $searchStatusEnum::NoResult();
+    }
+}
+
+// ## Rendering the page
+
+// Depending on the status of search, render the appropriate
+// template. There are three different "root" templates (i.e.
+// templates, which include the entire `<html>`-tree):
+//
+// - `index.phtml` is for actual search results.
+// - `noMatch.phtml` is for successful searches that did not yield
+//   any results or if no search was attempted at all.
+// - `error.phtml` is for all kinds of problems which may have
+//   occurred.
+switch ($status) {
+    case $searchStatusEnum::RecordsFound():
+        $trackingEvents['display'] = array();
+        include $helper->getTemplate('index');
+        break;
+    case $searchStatusEnum::EmptyResult():
+        if (!isset($message))
             $message = 'No result for <strong>"'
                      . htmlspecialchars($searchParameters->getQuery())
                      . '"</strong>';
-            include $helper->getTemplate('noMatch');
-            break;
-        case $searchStatusEnum::NoResult():
-            $error = 'No result - an error occurred...';
-            include $helper->getTemplate('error');
-            break;
-        default:
-            throw new Exception('No result (unknown status)');
-    }
-} catch (\Exception $e) {
-    // This is some code duplication from the above `switch` statement
-    // and handles different exceptions by doing a redirect or rendering
-    // the appropriate template.
-    if ($e instanceof RedirectException) {
-        $url = $e->getMessage();
-        if (!headers_sent())
-            header('Location: '.$url);
-        else
-            echo '<meta http-equiv="refresh" content="0; URL='
-               . $url . '"> <a href="' . $url . '"></a>';
-    } else if($e instanceof NoQueryException) {
-        $message = 'Please enter a search query';
         include $helper->getTemplate('noMatch');
-    } else {
-        $error = $e->getMessage();
+        break;
+    case $searchStatusEnum::NoResult():
+    default:
+        if (!isset($error))
+            $error = 'No result - an error occurred...';
         include $helper->getTemplate('error');
-    }
+        break;
 }
+
 // Finally, clean the buffer echo its contents. This string will contain the
 // entire HTML page.
 $output = ob_get_clean();
