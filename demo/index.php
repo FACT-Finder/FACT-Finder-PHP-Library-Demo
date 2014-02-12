@@ -13,11 +13,13 @@
 // **Here we go!**
 
 // ## Setting up the environment
+
+// The demo can live in any namespace.
 namespace FACTFinderDemo;
 
 error_reporting(E_ALL);
 
-// Set up constant with a few useful directory names.
+// Set up constants with a few useful directory names.
 define('DS', DIRECTORY_SEPARATOR);
 define('DEMO_DIR', dirname(__FILE__));
 define('LIB_DIR', dirname(DEMO_DIR).DS.'lib');

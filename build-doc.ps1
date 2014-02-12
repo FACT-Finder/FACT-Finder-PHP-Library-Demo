@@ -1,8 +1,3 @@
-# This script assumes that the 'master' branch is up-to-date and that the branch
-# you are currently on (if different from 'master') has no uncommitted changes.
-# Note that it will immediately commit the new doc into both the 'master' and
-# the 'gh-pages' branch but will not push the branches.
-#
 # You'll need node.js and docco to build the documentation. If you don't have
 # docco yet, you can install it via
 #
@@ -15,34 +10,11 @@ $scriptPath = $MyInvocation.MyCommand.Path
 $dir = Split-Path $scriptPath
 Push-Location $dir
 
-# Read current branch
-
-$branch = git status | Select-String -Pattern "On branch (.*)" -List `
-    | %{$_.matches[0].groups[1].value}
-
-git stash
-
-git checkout master
-
-# Build and commit documentation
+# Build doc
 
 docco -o docs .\demo\index.php .\demo\suggest.php .\demo\tracking.php `
               .\demo\userdata\initialization.php
 
-git add --all docs
-git commit -m "Update documentation"
-
-git stash
-
-# Merge new doc into GitHub pages branch
-
-git checkout gh-pages
-git cherry-pick master
-
-# Move back to original branch
-
-git checkout $branch
-
-git stash pop
+# Move back to original directory
 
 Pop-Location
