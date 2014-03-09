@@ -45,15 +45,16 @@ require_once LIB_DIR.DS.'FACTFinder'.DS.'Loader.php';
 use FACTFinder\Loader as FF;
 
 // To wire up all the necessary library objects, we are using the dependency
-// injection container (DIC) [Pimple](https://github.com/fabpot/Pimple).
+// injection container (DIC) [Pimple 2.0](https://github.com/fabpot/Pimple).
 // Basically, for each dependency we create an anonymous function that describes
 // how the dependency is created. We can either just store this in the DIC - in
-// which case it will be called every time needs an instance of the dependency -
-// or we can first pass our anonymous funcion to `$dic->share()`, which
-// basically makes the dependency a Singleton. Please refer to Pimple's
-// documentation for more information on its usage.
+// which case it will be shared, which basically makes the dependency a
+// Singleton - or we can first pass our anonymous funcion to `$dic->factory()`
+// so that the function will be called every time we need an instance of the
+// dependency. Please refer to *Pimple*'s documentation for more information on
+// its usage.
 
-// Note that we provide Pimple as part of the library, such that we can load it
+// Note that we provide *Pimple* as part of the library, such that we can load it
 // via `FF`.
 
 $dic = FF::getInstance('Util\Pimple');

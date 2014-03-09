@@ -107,7 +107,7 @@ the annotations explain what each dependency is for.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>Because Pimple works by defining as anonymous functions which are not called
+              <p>Because <em>Pimple</em> works by defining as anonymous functions which are not called
 until the dependency is actually needed, we can define them in any order.
 This way, we can start by setting up the dependencies we know we need and add
 their (second-level) dependencies afterwards.</p>
@@ -141,9 +141,13 @@ dependencies as we go along.</p>
               <p>First, the adapters need the class name of a logger (as does pretty much any
 other class in the library). Here, we’re using a logger that just forwards
 all calls to <a href="https://logging.apache.org/log4php/"><em>log4php</em></a>. While we’re at
-it, we’ll also configure <em>log4php</em>. Because we only want to run this function
-once (and then just want the resulting string over and over again), we pass
-the anonymous function to <code>$dic-&gt;share()</code>.</p>
+it, we’ll also configure <em>log4php</em>. By default, <em>Pimple</em>‘s dependencies are
+“shared”. That means, the function you store will only be called the first
+time the dependency is requested. The result of the function is then stored
+and returned every time the dependency is needed again. Because we want to
+run this function and configure <em>log4php</em> only once (and then just use the
+resulting string over and  over again), this default behavior is exactly what
+we need.</p>
 <p>If you want to log the demo itself differently from the library, you have two
 options:</p>
 <ul>
@@ -157,11 +161,11 @@ library.</li>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-variable">$dic</span>[<span class="hljs-string">'loggerClass'</span>] = <span class="hljs-variable">$dic</span>-&gt;share(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
+<span class="hljs-variable">$dic</span>[<span class="hljs-string">'loggerClass'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
     <span class="hljs-variable">$loggerClass</span> = FF::getClassName(<span class="hljs-string">'Util\Log4PhpLogger'</span>);
     <span class="hljs-variable">$loggerClass</span>::configure(USERDATA_DIR.DS.<span class="hljs-string">'log4php.xml'</span>);
     <span class="hljs-keyword">return</span> <span class="hljs-variable">$loggerClass</span>;
-});</pre></div></div>
+};</pre></div></div>
             
         </li>
         
@@ -176,19 +180,18 @@ library.</li>
 library needs access to the configuration). This demo uses an implementation
 of <code>ConfigurationInterface</code> which reads the required data from an XML file -
 in this case <code>./userdata/config.xml</code>. We don’t want to parse that file every
-time, we need the configuration, so we make it a Singleton by using
-<code>$dic-&gt;share()</code> again.</p>
+time, we need the configuration, so again we use a shared dependency.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-variable">$dic</span>[<span class="hljs-string">'configuration'</span>] = <span class="hljs-variable">$dic</span>-&gt;share(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
+<span class="hljs-variable">$dic</span>[<span class="hljs-string">'configuration'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
     <span class="hljs-keyword">return</span> FF::getInstance(
         <span class="hljs-string">'Core\XmlConfiguration'</span>,
         USERDATA_DIR.DS.<span class="hljs-string">'config.xml'</span>,
         <span class="hljs-string">'production'</span>
     );
-});</pre></div></div>
+};</pre></div></div>
             
         </li>
         
@@ -200,17 +203,19 @@ time, we need the configuration, so we make it a Singleton by using
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>Third, adapters need a <code>Request</code> object. This time, each adapter needs its
-own instance, so we don’t use <code>$dic-&gt;share()</code>. Unless you want to do
-something fancy with your request, you can use one of the request factories
-provided in the library (and, to be honest, even if you do need something
-fancy, you’d be better off writing a new factory).</p>
+own instance, so we don’t want <em>Pimple</em>‘s default behavior. Instead, we pass
+the function to <code>$dic-&gt;factory()</code>, which tells <em>Pimple</em> to rerun the function
+each time this dependency is needed.</p>
+<p>Unless you want to do something fancy with your request, you can use one of
+the request factories provided in the library (and, to be honest, even if you
+do need something fancy, you’d be better off writing a new factory).</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-variable">$dic</span>[<span class="hljs-string">'request'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
+<span class="hljs-variable">$dic</span>[<span class="hljs-string">'request'</span>] = <span class="hljs-variable">$dic</span>-&gt;factory(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
     <span class="hljs-keyword">return</span> <span class="hljs-variable">$c</span>[<span class="hljs-string">'requestFactory'</span>]-&gt;getRequest();
-};</pre></div></div>
+});</pre></div></div>
             
         </li>
         
@@ -250,14 +255,14 @@ sockets for your requests, you can implement the
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-variable">$dic</span>[<span class="hljs-string">'requestFactory'</span>] = <span class="hljs-variable">$dic</span>-&gt;share(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
+<span class="hljs-variable">$dic</span>[<span class="hljs-string">'requestFactory'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
     <span class="hljs-keyword">return</span> FF::getInstance(
         <span class="hljs-string">'Core\Server\MultiCurlRequestFactory'</span>,
         <span class="hljs-variable">$c</span>[<span class="hljs-string">'loggerClass'</span>],
         <span class="hljs-variable">$c</span>[<span class="hljs-string">'configuration'</span>],
         <span class="hljs-variable">$c</span>[<span class="hljs-string">'requestParser'</span>]-&gt;getRequestParameters()
     );
-});</pre></div></div>
+};</pre></div></div>
             
         </li>
         
@@ -276,7 +281,7 @@ for that, too.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-variable">$dic</span>[<span class="hljs-string">'clientUrlBuilder'</span>] = <span class="hljs-variable">$dic</span>-&gt;share(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
+<span class="hljs-variable">$dic</span>[<span class="hljs-string">'clientUrlBuilder'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
     <span class="hljs-keyword">return</span> FF::getInstance(
         <span class="hljs-string">'Core\Client\UrlBuilder'</span>,
         <span class="hljs-variable">$c</span>[<span class="hljs-string">'loggerClass'</span>],
@@ -284,7 +289,7 @@ for that, too.</p>
         <span class="hljs-variable">$c</span>[<span class="hljs-string">'requestParser'</span>],
         <span class="hljs-variable">$c</span>[<span class="hljs-string">'encodingConverter'</span>]
     );
-});</pre></div></div>
+};</pre></div></div>
             
         </li>
         
@@ -317,14 +322,14 @@ interesting parameters for you.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-variable">$dic</span>[<span class="hljs-string">'requestParser'</span>] = <span class="hljs-variable">$dic</span>-&gt;share(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
+<span class="hljs-variable">$dic</span>[<span class="hljs-string">'requestParser'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
     <span class="hljs-keyword">return</span> FF::getInstance(
         <span class="hljs-string">'Core\Client\RequestParser'</span>,
         <span class="hljs-variable">$c</span>[<span class="hljs-string">'loggerClass'</span>],
         <span class="hljs-variable">$c</span>[<span class="hljs-string">'configuration'</span>],
         <span class="hljs-variable">$c</span>[<span class="hljs-string">'encodingConverter'</span>]
     );
-});</pre></div></div>
+};</pre></div></div>
             
         </li>
         
@@ -347,7 +352,7 @@ check if we can use <code>utf8_encode</code>/<code>utf8_decode</code> instead.</
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-variable">$dic</span>[<span class="hljs-string">'encodingConverter'</span>] = <span class="hljs-variable">$dic</span>-&gt;share(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
+<span class="hljs-variable">$dic</span>[<span class="hljs-string">'encodingConverter'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
     <span class="hljs-keyword">if</span> (extension_loaded(<span class="hljs-string">'iconv'</span>))
         <span class="hljs-variable">$type</span> = <span class="hljs-string">'Core\IConvEncodingConverter'</span>;
     <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (function_exists(<span class="hljs-string">'utf8_encode'</span>)
@@ -361,7 +366,7 @@ check if we can use <code>utf8_encode</code>/<code>utf8_decode</code> instead.</
         <span class="hljs-variable">$c</span>[<span class="hljs-string">'loggerClass'</span>],
         <span class="hljs-variable">$c</span>[<span class="hljs-string">'configuration'</span>]
     );
-});</pre></div></div>
+};</pre></div></div>
             
         </li>
         

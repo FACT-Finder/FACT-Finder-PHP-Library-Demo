@@ -197,13 +197,14 @@ fully qualified class name. Use this to call static methods.</li>
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>To wire up all the necessary library objects, we are using the dependency
-injection container (DIC) <a href="https://github.com/fabpot/Pimple">Pimple</a>.
+injection container (DIC) <a href="https://github.com/fabpot/Pimple">Pimple 2.0</a>.
 Basically, for each dependency we create an anonymous function that describes
 how the dependency is created. We can either just store this in the DIC - in
-which case it will be called every time needs an instance of the dependency -
-or we can first pass our anonymous funcion to <code>$dic-&gt;share()</code>, which
-basically makes the dependency a Singleton. Please refer to Pimple’s
-documentation for more information on its usage.</p>
+which case it will be shared, which basically makes the dependency a
+Singleton - or we can first pass our anonymous funcion to <code>$dic-&gt;factory()</code>
+so that the function will be called every time we need an instance of the
+dependency. Please refer to <em>Pimple</em>‘s documentation for more information on
+its usage.</p>
 
             </div>
             
@@ -216,7 +217,7 @@ documentation for more information on its usage.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
-              <p>Note that we provide Pimple as part of the library, such that we can load it
+              <p>Note that we provide <em>Pimple</em> as part of the library, such that we can load it
 via <code>FF</code>.</p>
 
             </div>
