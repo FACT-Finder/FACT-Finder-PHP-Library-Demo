@@ -25,7 +25,6 @@ define('DEMO_DIR', dirname(__FILE__));
 define('LIB_DIR', dirname(DEMO_DIR).DS.'lib');
 define('TEMPLATE_DIR', DEMO_DIR.DS.'templates');
 define('USERDATA_DIR', DEMO_DIR.DS.'userdata');
-define('HELPER_DIR', DEMO_DIR.DS.'helper');
 
 // ## Setting up the library
 
