@@ -1,0 +1,108 @@
+/*****************************************************************************/
+/*** SUGGEST ***/
+/*****************************************************************************/
+
+/* needed otherwise the searchBoxLine will pop-up in IE */
+div.suggestFormWrap{
+	position:absolute;	
+	z-index:1001;
+}
+
+div.suggestLayer {
+	position: relative;
+
+	display: none;
+	padding: 0;
+	margin: 0;
+	z-index: 1002;	
+	background-color: white;
+}
+ul.suggestLayerList,ul.suggestLayerBlock,div.suggestLayerBlock{
+	list-style: none;
+	color: #58585a;
+	font-size: 11px;
+	background-color: white;
+	cursor: pointer;
+	border: 5px solid #efefef;
+	-moz-box-shadow: 0 4px 3px #c2c4c6;
+	-webkit-box-shadow: 0 4px 3px #c2c4c6;
+	box-shadow: 0 4px 3px #c2c4c6;
+	border-collapse: separate;
+	padding: 10px;
+	overflow:auto;
+}
+ul.suggestLayerList li,ul.suggestLayerBlock li, ul.suggestLayerBlockText li, ul.suggestLayerBlockImage li{
+	list-style: none;
+	display: block;
+}
+.suggestLayerBlockImage, .suggestLayerBlockText{
+	float: left;
+	padding: 0;
+	margin: 0;	
+}
+.suggestLayerBlockImage{
+	border-left: 1px solid #D7D7D7;
+	margin-left: 10px;
+	padding-left: 10px;
+}
+li.suggestHeader{
+	color: #b0b1b3;
+	/*font-weight: bold;*/
+	font-weight: normal;
+	font-size: 10px;
+	border-bottom: 1px solid #d7d7d7;
+	padding: 3px 10px 3px 5px;
+	/*text-align: left;*/
+}
+.suggestLayerBlock ul:first-child li.suggestHeader:first-child{
+}
+.suggestLayerBlock ul.noborder{
+	border: none;
+	padding-left: 0;
+	border-left: 0;
+}
+li.suggestRow{
+	padding: 6px;
+}
+li.suggestRowWithImage{	
+	/*vertical-align: middle;*/
+	height: 40px;
+	line-height: 40px;	
+}
+span.suggestTextQuery{
+	font-weight: bold;
+	font-size: 12px;	
+	white-space: nowrap;	
+}
+span.suggestTextQueryTyped{
+	color: #B5C568;
+	text-decoration: underline;
+}
+span.suggestTextType{
+	float: right;
+	padding-left: 20px;
+	font-size: 10px;
+}
+span.suggestTextAmount{
+	float: right;
+	padding-left: 10px;
+	font-size: 10px;
+	text-align: right;
+	width: 90px;
+}
+span.suggestParentCategory{
+	font-size: 10px;
+	color: #B0B1B3;
+	padding-left: 10px;
+}
+li.suggestHighlight{
+	background-color: #F3FCC8;
+}
+span.suggestImage{
+	padding-right: 20px;
+	height: 40px;
+}
+span.suggestImage img{
+	max-height: 40px;
+	max-width: 35px;
+}

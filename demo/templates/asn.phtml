@@ -6,21 +6,33 @@
 				$linkCount = 0;
 				foreach($group AS $element) {
 					if ($element->isSelected()) {
-						// show deselect links
-						echo '<p class="asnElement selected lvl'. $element->getClusterLevel() .'">
-								<a href="'.$element->getUrl().'">'.$element->getLabel().' '.$group->getUnit().'<br />
-									<span>(remove filter)</span></a>
-							</p>';
+						echo '<p class="asnElement selected lvl'. $element->getClusterLevel() .'">';
+							if ($group->isSingleShowUnselectedType()) {
+								echo '<input type="radio" checked="checked" name="'.$element->getLabel().'" id="'.$element->getLabel().'" value="'.$element->getUrl().'" onchange="if (this.value != \'\') {document.location.href=this.value;}">&nbsp;';
+								echo '<label for="'.$element->getLabel().'">'.$element->getLabel().' '.$group->getUnit().'</label>';
+							}
+							else if ($group->isMultiSelectStyle()) {
+								echo '<input type="checkbox" checked="checked" name="'.$element->getLabel().'" id="'.$element->getLabel().'" value="'.$element->getUrl().'" onchange="if (this.value != \'\') {document.location.href=this.value;}">&nbsp;';
+								echo '<label for="'.$element->getLabel().'">'.$element->getLabel().' '.$group->getUnit().'</label>';
+							} else {
+								echo '<a href="'.$element->getUrl().'">'.$element->getLabel().' '.$group->getUnit().'<br /><span>(remove filter)</span></a>';
+							}
+						echo '</p>';
 					} else {
 						if ($linkCount < $group->getDetailedLinkCount()) {
-							// show filters as usual links
-							echo '<p class="asnElement lvl'. $element->getClusterLevel() .'">
-									<a href="'.$element->getUrl().'">'.$element->getLabel();
-                            if($group->getUnit()) echo ' ', $group->getUnit();
-							if (!$searchParameters->isNavigationEnabled()) {
-								echo ' <span>('.$element->getMatchCount().')</span>';
+							echo '<p class="asnElement lvl'. $element->getClusterLevel() .'">';
+							if ($group->isSingleShowUnselectedType()) {
+								echo '<input type="radio" name="'.$element->getLabel().'" id="'.$element->getLabel().'" value="'.$element->getUrl().'" onchange="if (this.value != \'\') {document.location.href=this.value;}">&nbsp;';
+								echo '<label for="'.$element->getLabel().'">'.$element->getLabel().' '.$group->getUnit().' ('.$element->getMatchCount().')</label>';
 							}
-							echo '</a></p>';
+							else if ($group->isMultiSelectStyle()) {
+								echo '<input type="checkbox" name="'.$element->getLabel().'" id="'.$element->getLabel().'" value="'.$element->getUrl().'" onchange="if (this.value != \'\') {document.location.href=this.value;}">&nbsp;';
+								echo '<label for="'.$element->getLabel().'">'.$element->getLabel().' '.$group->getUnit().' ('.$element->getMatchCount().')</label>';
+							}
+							else {
+								echo '<a href="'.$element->getUrl().'">'.$element->getLabel().' '.$group->getUnit().' ('.$element->getMatchCount().')</a><br/>';
+							}
+							echo '</p>';
 							$linkCount++;
 						} else {
 							// show filters as drop down
