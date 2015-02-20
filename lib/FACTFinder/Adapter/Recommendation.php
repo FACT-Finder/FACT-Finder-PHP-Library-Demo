@@ -184,7 +184,7 @@ class Recommendation extends AbstractAdapter
             $position
         );
     }
-
+	
     /**
      * Get the recommendations from FACT-Finder as the string returned by the
      * server.
@@ -199,7 +199,7 @@ class Recommendation extends AbstractAdapter
      */
     public function getRawRecommendations($format = null, $callback = null)
     {
-        var_dump($this->createRecommendations());//$this->usePassthroughResponseContentProcessor();
+        $this->usePassthroughResponseContentProcessor();
 
         if (!is_null($format))
             $this->parameters['format'] = $format;
