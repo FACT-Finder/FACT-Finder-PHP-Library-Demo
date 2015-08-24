@@ -122,18 +122,11 @@ $searchParameters = FF::getInstance(
 // We'll need the target for the action of the search box form.
 $target = $dic['requestParser']->getRequestTarget();
 
-$trackingEvents = array();
-
-// Get or start a session. This is needed for the tracking. If it's
-// a new session, mark that event for tracking.
+// Get or start a session. This is needed for the tracking.
 $sid = session_id();
 if ($sid === '') {
     session_start();
     $sid = session_id();
-    if(!isset($_SESSION['started'])) {
-        $trackingEvents['sessionStart'] = array();
-        $_SESSION['started'] = true;
-    }
 }
 
 // The library contains a few "enums" (of course, PHP does not have
@@ -141,6 +134,7 @@ if ($sid === '') {
 // Their values can be obtained from static methods, so we'll need the
 // enum's class name.
 $searchStatusEnum = FF::getClassName('Data\SearchStatus');
+$articleNumberSearchStatusEnum = FF::getClassName('Data\ArticleNumberSearchStatus');
 
 // This class provides functions to the included templates. *For some reason
 // we cannot call global functions directly in included files. Until this is
@@ -192,7 +186,7 @@ try {
     // Now we'll save all the data from our adapters into corresponding
     // variables. The templates will then use these to render the page.
     $status                 = $searchAdapter->getStatus();
-    /*$isArticleNumberSearch  = $searchAdapter->isArticleNumberSearch();*/
+    $articleNumberStatus    = $searchAdapter->getArticleNumberStatus();
     $isSearchTimedOut       = $searchAdapter->isSearchTimedOut();
 
     $productsPerPageOptions = $searchAdapter->getResultsPerPageOptions();
@@ -232,8 +226,21 @@ try {
 //   occurred.
 switch ($status) {
     case $searchStatusEnum::RecordsFound():
-        $trackingEvents['display'] = array();
-        include $helper->getTemplate('index');
+        switch ($articleNumberStatus) {
+            case $articleNumberSearchStatusEnum::IsArticleNumberResultFound():
+                // redirect to detail page
+                if (!isset($fieldname)) {
+                    include 'templates/fieldnamesConfig.php';
+                }
+                $detailUrl = $result[0]->getField($fieldname['detailUrl']);
+                         if (!headers_sent())
+                    header('Location: '.$detailUrl);
+                else
+                    die('<meta http-equiv="refresh" content="0; URL='
+                       . $detailUrl . '"> <a href="' . $detailUrl . '"></a>');
+            default:
+                include $helper->getTemplate('index');
+        }
         break;
     case $searchStatusEnum::EmptyResult():
         if (!isset($message))

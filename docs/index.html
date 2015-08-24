@@ -367,8 +367,7 @@ parameters relating to actual search.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-variable">$target</span> = <span class="hljs-variable">$dic</span>[<span class="hljs-string">'requestParser'</span>]-&gt;getRequestTarget();
-
-<span class="hljs-variable">$trackingEvents</span> = <span class="hljs-keyword">array</span>();</pre></div></div>
+</pre></div></div>
             
         </li>
         
@@ -379,8 +378,7 @@ parameters relating to actual search.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
-              <p>Get or start a session. This is needed for the tracking. If it’s
-a new session, mark that event for tracking.</p>
+              <p>Get or start a session.</p>
 
             </div>
             
@@ -388,10 +386,6 @@ a new session, mark that event for tracking.</p>
 <span class="hljs-keyword">if</span> (<span class="hljs-variable">$sid</span> === <span class="hljs-string">''</span>) {
     session_start();
     <span class="hljs-variable">$sid</span> = session_id();
-    <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_SESSION</span>[<span class="hljs-string">'started'</span>])) {
-        <span class="hljs-variable">$trackingEvents</span>[<span class="hljs-string">'sessionStart'</span>] = <span class="hljs-keyword">array</span>();
-        <span class="hljs-variable">$_SESSION</span>[<span class="hljs-string">'started'</span>] = <span class="hljs-keyword">true</span>;
-    }
 }</pre></div></div>
             
         </li>
@@ -410,7 +404,8 @@ enum’s class name.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-variable">$searchStatusEnum</span> = FF::getClassName(<span class="hljs-string">'Data\SearchStatus'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-variable">$searchStatusEnum</span> = FF::getClassName(<span class="hljs-string">'Data\SearchStatus'</span>);</pre></div>
+            <div class='highlight'><pre><span class="hljs-variable">$articleNumberSearchStatusEnum</span> = FF::getClassName(<span class="hljs-string">'Data\ArticleNumberSearchStatus'</span>);</pre></div></div>
             
         </li>
         
@@ -559,8 +554,9 @@ variables. The templates will then use these to render the page.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-variable">$status</span>                 = <span class="hljs-variable">$searchAdapter</span>-&gt;getStatus();
-    <span class="hljs-comment">/*$isArticleNumberSearch  = $searchAdapter-&gt;isArticleNumberSearch();*/</span>
+            <div class="content"><div class='highlight'><pre>    
+    <span class="hljs-variable">$status</span>                 = <span class="hljs-variable">$searchAdapter</span>-&gt;getStatus();
+    <span class="hljs-variable">$articleNumberStatus</span>    = <span class="hljs-variable">$searchAdapter</span>-&gt;getArticleNumberStatus();
     <span class="hljs-variable">$isSearchTimedOut</span>       = <span class="hljs-variable">$searchAdapter</span>-&gt;isSearchTimedOut();
 
     <span class="hljs-variable">$productsPerPageOptions</span> = <span class="hljs-variable">$searchAdapter</span>-&gt;getResultsPerPageOptions();
@@ -636,7 +632,6 @@ occurred.</li>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">switch</span> (<span class="hljs-variable">$status</span>) {
     <span class="hljs-keyword">case</span> <span class="hljs-variable">$searchStatusEnum</span>::RecordsFound():
-        <span class="hljs-variable">$trackingEvents</span>[<span class="hljs-string">'display'</span>] = <span class="hljs-keyword">array</span>();
         <span class="hljs-keyword">include</span> <span class="hljs-variable">$helper</span>-&gt;getTemplate(<span class="hljs-string">'index'</span>);
         <span class="hljs-keyword">break</span>;
     <span class="hljs-keyword">case</span> <span class="hljs-variable">$searchStatusEnum</span>::EmptyResult():

@@ -27,7 +27,7 @@ require_once USERDATA_DIR.DS.'initialization.php';
 
 // We only need one Tracking adapter here.
 $trackingAdapter = FF::getInstance(
-    'Adapter\ScicTracking',
+    'Adapter\Tracking',
     $dic['loggerClass'],
     $dic['configuration'],
     $dic['request'],

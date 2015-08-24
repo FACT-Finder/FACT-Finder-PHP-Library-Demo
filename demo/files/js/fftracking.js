@@ -1,77 +1,68 @@
-function trackEvent(eventName, sourceRefKey, sessionId, channel, extraParams) {
-    var request;
-    var debug      = false;
+var tracking = {
 
-    var requestUrl = 'tracking.php?';
-    requestUrl += 'event=' + eventName;
-    requestUrl += '&sourceRefKey=' + sourceRefKey;
-    requestUrl += '&channel=' + channel;
-    requestUrl += '&sid=' + sessionId;
-
-    for (var param in extraParams) {
-        if (extraParams[param] != null)
-            requestUrl += '&' + param + '=' + extraParams[param];
-    }
-
-    try {
-
-        if( window.XMLHttpRequest ) {
-            request = new XMLHttpRequest();
-        } else if( window.ActiveXObject ) {
-            request = new ActiveXObject( "Microsoft.XMLHTTP" );
-        } else {
-            if (debug) alert( 'no ajax connection' );
+    doTrack : function(eventName, channel, sessionId, extraParams) {
+        var params = {
+            event : eventName,
+            channel : channel,
+            sid : sessionId
+        };
+        for ( var param in extraParams) {
+            if (extraParams[param] != null)
+                params[param] = extraParams[param];
         }
+        $.ajax({
+            type : "GET",
+            url : "tracking.php",
+            data : params,
+            contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+            cache : false,
+            async : false
+        });
+    },
 
-        if (request != null) {
-            request.open( "GET", requestUrl, false );
-            request.send( null );
-        }
-    } catch( ex ) {
-        if (ex != undefined) {
-            if (debug) alert( 'Error: ' + ex.getmessage );
-        } else {
-            if (debug) alert( 'Error: ' + ex );
-        }
-    }
-}
+    click : function(channel, sessionId, id, masterId, query, pos, origPos,
+            page, origPageSize) {
+        this.doTrack('click', channel, sessionId, {
+            id : id,
+            masterId : masterId,
+            query : query,
+            pos : pos,
+            origPos : origPos,
+            page : page,
+            origPageSize : origPageSize
+        });
+    },
 
-// deprecated as of 6.9
-function clickProduct(query, artId, artPos, artOrigPos, pageNum, artSimi, sessionId, artTitle, pageSize, origPageSize, channel, eventName){
-    debug      = false;
-    request    = null;
-    requestUrl = 'tracking.php';
-    requestUrl += '?query=' + query;
-    requestUrl += '&id=' + artId;
-    requestUrl += '&pos=' + artPos;
-    requestUrl += '&origPos=' + artOrigPos;
-    requestUrl += '&page=' + pageNum;
-    requestUrl += '&simi=' + artSimi;
-    requestUrl += '&sid=' + sessionId;
-    requestUrl += '&title=' + artTitle;
-    requestUrl += '&pageSize=' + pageSize;
-    requestUrl += '&origPageSize=' + origPageSize;
-    requestUrl += '&channel=' + channel;
-    requestUrl += '&event=' + eventName;
+    cart : function(channel, sessionId, id, masterId, count, price, query) {
+        this.doTrack('cart', channel, sessionId, {
+            id : id,
+            masterId : masterId,
+            count : count,
+            price : price,
+            query : query
+        });
+    },
 
-    try {
-        if( window.XMLHttpRequest ) {
-            request = new XMLHttpRequest();
-        } else if( window.ActiveXObject ) {
-            request = new ActiveXObject( "Microsoft.XMLHTTP" );
-        } else {
-            if (debug) alert( 'no ajax connection' );
-        }
+    directCart : function(channel, sessionId, id, masterId, query, pos,
+            origPos, page, origPageSize, count, price) {
+        this.click(channel, sessionId, id, masterId, query, pos, origPos, page,
+                origPageSize);
+        this.cart(channel, sessionId, id, masterId, count, price, query);
+    },
 
-        if (request != null) {
-            request.open( "GET", requestUrl, false );
-            request.send( null );
-        }
-    } catch( ex ) {
-        if (ex != undefined) {
-            if (debug) alert( 'Error: ' + ex.getmessage );
-        } else {
-            if (debug) alert( 'Error: ' + ex );
-        }
+    checkout : function(channel, sessionId, id, masterId, count, price, query) {
+        this.doTrack('checkout', channel, sessionId, {
+            id : id,
+            masterId : masterId,
+            count : count,
+            price : price,
+            query : query
+        });
+    },
+
+    login : function(channel, sessionId, userId) {
+        this.doTrack('login', channel, sessionId, {
+            userId : userId
+        });
     }
 }
