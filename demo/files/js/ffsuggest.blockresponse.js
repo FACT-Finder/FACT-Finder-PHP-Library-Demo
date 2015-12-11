@@ -1,22 +1,4 @@
-
-
-
-
-
-
-
-
-
 function FFSuggest() {
-	var pSuggestParCatClass 		= 'suggestParentCategory';
-
-	
-
-
-
-
-
-
 
 var pDebug					= false;
 var pInstanceName			= '';
@@ -42,6 +24,7 @@ var pSuggestRowClass	    = 'suggestRow';
 var pSuggestHighlightClass  = 'suggestHighlight';
 var pSuggestLayerBlockText	= 'suggestLayerBlockText';
 var pSuggestLayerBlockImage	= 'suggestLayerBlockImage';
+var pSuggestParCatClass 	= 'suggestParentCategory';
 
 var ptranslation;
 
@@ -62,7 +45,7 @@ this.init = function(searchURL, formname, queryParamName, divLayername, instance
 		if (pDebug) alert('no searchurl defined');
 		return null;
 	} else if (pInstanceName == '') {
-		if (pDebug) alert('no instancefname defined');
+		if (pDebug) alert('no instancename defined');
 		return null;
 	} else if (pFormname == '') {
 		if (pDebug) alert('no formname defined');
@@ -118,30 +101,23 @@ function handleSubmit() {
 		}
 
 		url = addGeneralTrackingInformationToUrl(url);
-		// encode the plus sign
-		url = url.replace(/\+/g, '%20');
-		
+
 		window.location = url;
 		return false;
 	}
 	return true;
 }
 
-function addTrackingInformationToDetailUrl(url) {
-	url = addParam(url, 'sourceRef', 'int:suggest');
-	url = addParam(url, 'userInput', pLastQuery);
-	return url;
-}
-
 function addTrackingInformationToSearchUrl(url) {
-	url = addParam(url, 'queryOrigin', "suggest");
+	url = addParam(url, 'queryFromSuggest', 'true');
 	url = addParam(url, 'userInput', pLastQuery);
+	url = addParam(url, 'ignoreForCache', 'userInput');
+	url = addParam(url, 'ignoreForCache', 'queryFromSuggest');
 	return url;
 }
 
 function addGeneralTrackingInformationToUrl(url) {
 	if (pSid) { url = addParam(url, 'sid', pSid); }
-	if (pSite) { url = addParam(url, 'site', pSite); }
 	return url;
 }
 
@@ -466,9 +442,11 @@ function addParam(url, paramName, paramValue) {
 			suggestCount = suggestCount.replace(/\{0\}/,temp);
 		}
 
+		var encodedQuery = htmlEncode(query);
+
 		var html = '<li id="' + id + '" class="'+pSuggestRowClass+' suggestRowWithoutImage" onMouseMove="' + pInstanceName + '.handleMouseMove(\'' + id + '\');"'
 				+ 'onMouseOut="' + pInstanceName + '.handleMouseOut(\'' + id +'\');">'
-				+ '<span class="'+ pSuggestQueryClass +'">' + htmlEncode(suggestQuery).replace(new RegExp("("+query+")","ig"),'<span class="'+pSuggestQueryTypedClass+'">$1</span>') + '</span>'
+				+ '<span class="'+ pSuggestQueryClass +'">' + htmlEncode(suggestQuery).replace(new RegExp("("+encodedQuery+")","ig"),'<span class="'+pSuggestQueryTypedClass+'">$1</span>') + '</span>'
 				+ getParentCategoryHtml(jsonSug)
 				+'<span class="'+ pSuggestAmountClass +'">' + suggestCount + '</span>';
 		return html;
@@ -489,6 +467,8 @@ function addParam(url, paramName, paramValue) {
 			suggestImage.parentId = id;
 		}
 		
+		var encodedQuery = htmlEncode(query);
+		
 		var html = '<li id="' + id + '" class="'+pSuggestRowClass+' '+pSuggestRowClass+'WithImage" onMouseMove="' + pInstanceName + '.handleMouseMove(\'' + id + '\');"'
 				+ 'onMouseOut="' + pInstanceName + '.handleMouseOut(\'' + id +'\');">'
 				+ '<span class="'+ pSuggestImageClass +'">';
@@ -496,7 +476,7 @@ function addParam(url, paramName, paramValue) {
 			html += '<img src="' + suggestImageUrl + '" alt=""/>';
 		}
 		html += '</span>'
-			+ '<span class="'+ pSuggestQueryClass +'">' + htmlEncode(suggestQuery).replace(new RegExp("("+query+")","ig"),'<span class="'+pSuggestQueryTypedClass+'">$1</span>') + '</span>';
+			+ '<span class="'+ pSuggestQueryClass +'">' + htmlEncode(suggestQuery).replace(new RegExp("("+encodedQuery+")","ig"),'<span class="'+pSuggestQueryTypedClass+'">$1</span>') + '</span>';
 		
 		return html;
 	}
@@ -504,20 +484,18 @@ function addParam(url, paramName, paramValue) {
 	function getParentCategoryHtml(jsonSug){
 		var parCat = jsonSug.attributes['parentCategory'];
 		var parCatHtml = '';
-		if(parCat != null){
+		if(parCat != null) {
 			parCat = parCat.replace(/\//g, ' > ');
 			parCatHtml = '<span class="'+pSuggestParCatClass+'">'+decodeURIComponent(parCat)+'<\/span>';
 		}
 		return parCatHtml;
 	}
 	
-	function onSubmitSuggest(chosenJson){
-		var type = pSuggest[pCurrentSelection].type;
-		if(type == 'productName'){
-			var dplnk = pSuggest[pCurrentSelection].attributes['deeplink'];
-			dplnk = addTrackingInformationToDetailUrl(dplnk);
+	function onSubmitSuggest(chosenJson){		
+		var dplnk = pSuggest[pCurrentSelection].attributes['deeplink'];
+		if (dplnk != null){ 
 			return dplnk;
-		}	
+		}
 	}
 	
 	function moveHorizontalInSuggestBox() {

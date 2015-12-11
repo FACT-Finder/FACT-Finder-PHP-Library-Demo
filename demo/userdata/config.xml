@@ -7,7 +7,7 @@
 			<address>demoshop.fact-finder.de</address>
 			<port>80</port>
 			<context>FACT-Finder</context>
-			<channel>de</channel>
+			<channel>fahrrad-de</channel>
 			<language>de</language>
 			<authentication>
 				<type>advanced</type> <!-- possible values: http, simple, advanced -->
