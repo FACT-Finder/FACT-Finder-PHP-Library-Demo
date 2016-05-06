@@ -7,11 +7,10 @@
 		<link rel="shortcut icon" href="./files/images/demoshop/favicon.ico">
 		<link rel="stylesheet" type="text/css" href="./files/css/demoshop.css">
 		<link rel="stylesheet" type="text/css" href="./files/css/suggest.blockresponse.css">
-
-		<script language="JavaScript" type="text/javascript" src="./files/js/ffsuggest.blockresponse.js"></script>
-		<script language="JavaScript" type="text/javascript" src="./files/js/jquery/jquery-1.2.6.min.js"></script>
-
+		
+		<script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script language="JavaScript" type="text/javascript" src="./files/js/demoshop/demoshop.js"></script>
+		<script language="JavaScript" type="text/javascript" src="./files/js/ffsuggest.blockresponse.js"></script>
 
 		<?php if (isset($campaigns)) echo $campaigns->getFeedback('html header'); ?>
 	</head>
@@ -62,7 +61,7 @@
 							echo '<p class="resultSingleQueries">For some parts of your query we found these result counts:</p>';
 							echo '<ul class="resultSingleQueriesList">';
 							foreach($singleWordSearch as $suggestions) {
-								echo '<li><a href="'.$suggestions->getUrl().'">'.htmlspecialchars($suggestions->getQuery()).' ('.$suggestions->getHitCount().')</a></li>';
+								echo '<li><a href="'.$suggestions->getUrl().'">'.htmlspecialchars($suggestions->getLabel()).' ('.$suggestions->getHitCount().')</a></li>';
 							}
 							echo '</ul>';
 						}

@@ -81,37 +81,6 @@ hr{
 	float:left;
 	padding-left: 10px;
 }
-#header #tabs {
-	padding-top: 62px;
-	float: right;
-}
-* html  #header #tabs{
-	padding-top: 64px;
-}
-#header #tabs div{
-	width: 100px;
-	height: 19px; /* 24px-padding */
-	white-space: nowrap;
-	float: left;
-	margin-right: 5px;
-	padding-top: 5px;
-	background-image: url("../images/demoshop/tab_100.png");
-	background-repeat: no-repeat;
-	font-size: 11pt;
-	font-weight: bold;
-	text-align: center;
-}
-* html  #header #tabs div{
-	height: 24px;
-}
-#header #tabs div.passive{
-	opacity: 0.5;
-	filter:alpha(opacity=50);
-}
-#header #tabs div.bigTab{
-	width: 129px;
-	background-image: url("../images/demoshop/tab_129.png");
-}
 
 /*****************************************************************************/
 /*** SEARCHBOXLINE ***/
@@ -218,21 +187,13 @@ div.suggestFormWrap{
 * html #asnColumn {
 	width: 170px;
 }
-#asnColumn.asnHintDE {
-	background-image: url("../images/demoshop/asn_hint_de.png");
-	background-repeat: no-repeat;
-	background-position: top ;
-}
 #asnColumn.asnHintEN {
 	background-image: url("../images/demoshop/asn_hint_en.png");
 	background-repeat: no-repeat;
 	background-position: top ;
 }
 div.asnGroup p.asnElement{
-	padding: 4px 0 3px 12px;
-	background-image: url("../images/demoshop/quad.png");
-	background-repeat: no-repeat;
-	background-position: center left;
+	padding: 4px 0 0 0;
 	margin: 0;
 }
 div.asnGroup p.asnElement span{
@@ -243,9 +204,6 @@ div.asnGroup p.lvl1{
 }
 div.asnGroup p.lvl2{
 	margin-left: 25px;
-}
-div.asnGroup p.selected{
-	background-image: url("../images/demoshop/quad_red_filled.png");
 }
 div.asnGroup p.selected a{
 	color: #AD0E3F;
@@ -637,65 +595,6 @@ div.product div.hoverDescription{
 	filter:alpha(opacity=33);
 }
 
-
-/*****************************************************************************/
-/*** INFO COLUMN ***/
-/*****************************************************************************/
-
-#infoColumn {
-	float: right;
-	width: 155px;
-	padding: 60px 10px 40px 5px;
-}
-#infoColumn h3{
-	margin-right: 0;
-	padding-left: 0;
-}
-
-#tagCloud * {
-	padding-left: 10px;
-}
-
-/*****************************************************************************/
-/*** PRODUCT TRASH ***/
-/*****************************************************************************/
-
-div#productTrash{
-	cursor: pointer;
-	position: absolute;
-	z-index:50;
-	top: 900px;
-	height: 128px;
-	width: 128px;
-	padding-left: 0;
-	text-align: center;
-	margin-left: 10px;
-	background-image: url("../images/demoshop/management/bigtrash_empty.png");
-	background-color: white;
-	background-position: bottom;
-	background-repeat: no-repeat;
-	display: none;
-	opacity: 0.6;
-	filter:alpha(opacity=60);
-}
-div#productTrash.full{
-	background-image: url("../images/demoshop/management/bigtrash_full.png");
-	margin-top: -4px;
-}
-div#productTrash img#ajaxLoading{
-	padding-left: 0;
-	margin-top: 35px;
-	margin-left: 7px;
-	display: none;
-}
-div.dragging{
-	opacity: 0.5;
-	filter:alpha(opacity=50);
-}
-div#productTrash.dragOver{
-	background-color: #AD0E3F;
-}
-
 /*****************************************************************************/
 /*** FOOTER ***/
 /*****************************************************************************/
@@ -716,12 +615,6 @@ div#productTrash.dragOver{
 }
 #footer #footerText{
 	float:left;
-}
-#footer #footerLink{
-	float:right;
-}
-#footer #footerLink a{
-	color: #FFFFFF;
 }
 
 /*****************************************************************************/
@@ -781,124 +674,6 @@ ul#similarReason li.fieldName{
 	margin-left: 0;
 }
 
-/*****************************************************************************/
-/*** PRODUCT TRASH POPUP ***/
-/*****************************************************************************/
-
-div.ui-dialog {
-	background-color: #FFFFFF;
-	border: 1px solid #173452;
-	text-align: left;
-}
-.ui-dialog .ui-dialog-titlebar {
-	background: #173452;
-	padding: 0px;
-	height: 28px;
-	_height: 29px;
-	color: #FFFFFF;
-}
-.ui-dialog.ui-draggable .ui-dialog-titlebar {
-	cursor: move;
-}
-.ui-dialog .ui-dialog-titlebar-close {
-	position:absolute;
-	top: 6px;
-	right: 10px;
-	color: white;
-	font-weight: bold;
-	font-size: 12px;
-}
-.ui-dialog .ui-dialog-title {
-	margin-left: 5px;
-	color: white;
-	font-weight: bold;
-	position: relative;
-	top: 7px;
-	left: 4px;
-	white-space: nowrap;
-}
-.ui-dialog .ui-dialog-content {
-	margin: 1.2em;
-}
-div.trashError{
-	border: 1px solid red;
-}
-div.trashError div.ui-dialog-titlebar {
-	background: red;
-}
-
-.ui-resizable {
-	position: relative;
-}
-.ui-resizable-handle {
-	position: absolute;
-	display: none;
-	font-size: 0.1px;
-}
-.ui-resizable .ui-resizable-handle {
-	display: block;
-}
-body .ui-resizable-disabled .ui-resizable-handle { display: none; } /* use 'body' to make it more specific (css order) */
-body .ui-resizable-autohide .ui-resizable-handle { display: none; } /* use 'body' to make it more specific (css order) */
-
-.ui-resizable-n {
-	cursor: n-resize;
-	height: 6px;
-	width: 100%;
-	top: 0px;
-	left: 0px;
-}
-.ui-resizable-s {
-	cursor: s-resize;
-	height: 6px;
-	width: 100%;
-	bottom: 0px;
-	left: 0px;
-}
-.ui-resizable-e {
-	cursor: e-resize;
-	width: 6px;
-	right: 0px;
-	top: 0px;
-	height: 100%;
-}
-.ui-resizable-w {
-	cursor: w-resize;
-	width: 6px;
-	left: 0px;
-	top: 0px;
-	height: 100%;
-}
-.ui-resizable-se {
-	cursor: se-resize;
-	width: 9px;
-	height: 9px;
-	right: 0px;
-	bottom: 0px;
-	background-color: #173452;
-}
-.ui-resizable-sw {
-	cursor: sw-resize;
-	width: 9px;
-	height: 9px;
-	left: 0px;
-	bottom: 0px;
-	background-color: #173452;
-}
-.ui-resizable-nw {
-	cursor: nw-resize;
-	width: 9px;
-	height: 9px;
-	left: 0px;
-	top: 0px;
-}
-.ui-resizable-ne {
-	cursor: ne-resize;
-	width: 9px;
-	height: 9px;
-	right: 0px;
-	top: 0px;
-}
 
 /*****************************************************************************/
 /*** PREVIEW ASN IMAGES ***/
@@ -1003,10 +778,3 @@ div#form div#returnInfo ul li{
 	margin-top: 2px;
 }
 
-/*****************************************************************************/
-/*** EXPERIMENTAL ***/
-/*****************************************************************************/
-
-.infoblock {
-	cursor:help;
-}

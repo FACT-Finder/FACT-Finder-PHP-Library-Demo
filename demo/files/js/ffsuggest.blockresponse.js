@@ -329,7 +329,7 @@ function addParam(url, paramName, paramValue) {
 
 	
 	function getSuggestions(){
-		var query = $('input[name='+pQueryParamName+']').attr('value');
+		var query = $('input[name='+pQueryParamName+']').val();;
 		//check if the same query was asked before
 		if(pLastQuery == query){
 			return;
@@ -338,7 +338,7 @@ function addParam(url, paramName, paramValue) {
 		}
 
 		
-			var requestURL = pSearchURL +'?'+ pQueryParamName +'='+ encodeURIComponent(query) +'&'+ pChannelParamName +'='+ pChannel+'&format=jsonp&callback=?&omitContextName=true';
+		var requestURL = pSearchURL +'?'+ pQueryParamName +'='+ encodeURIComponent(query) +'&'+ pChannelParamName +'='+ pChannel+'&format=jsonp&callback=?&omitContextName=true';
 		
 		requestURL = addGeneralTrackingInformationToUrl(requestURL);
 
