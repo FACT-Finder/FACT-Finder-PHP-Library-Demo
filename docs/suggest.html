@@ -16,28 +16,25 @@
           <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
           <a class="small" href="javascript:void(0);">+</a>
           <div id="jump_wrapper">
-          <div id="jump_page">
-            
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
               
-              <a class="source" href="index.html">
-                index.php
-              </a>
-            
+                
+                <a class="source" href="index.html">
+                  index.php
+                </a>
               
-              <a class="source" href="suggest.html">
-                suggest.php
-              </a>
-            
+                
+                <a class="source" href="suggest.html">
+                  suggest.php
+                </a>
               
-              <a class="source" href="tracking.html">
-                tracking.php
-              </a>
-            
+                
+                <a class="source" href="tracking.html">
+                  tracking.php
+                </a>
               
-              <a class="source" href="initialization.html">
-                initialization.php
-              </a>
-            
+            </div>
           </div>
         </li>
       </ul>
@@ -61,7 +58,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-preprocessor">&lt;?php</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-meta">&lt;?php</span></pre></div></div>
             
         </li>
         
@@ -92,7 +89,7 @@ define(<span class="hljs-string">'USERDATA_DIR'</span>, DEMO_DIR.DS.<span class=
 
 <span class="hljs-keyword">use</span> <span class="hljs-title">FACTFinder</span>\<span class="hljs-title">Loader</span> <span class="hljs-title">as</span> <span class="hljs-title">FF</span>;
 
-<span class="hljs-variable">$dic</span> = FF::getInstance(<span class="hljs-string">'Util\Pimple'</span>);</pre></div></div>
+$dic = FF::getInstance(<span class="hljs-string">'Util\Pimple'</span>);</pre></div></div>
             
         </li>
         
@@ -124,12 +121,12 @@ because it is basically a programmatic configuration of the library</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-variable">$suggestAdapter</span> = FF::getInstance(
+            <div class="content"><div class='highlight'><pre>$suggestAdapter = FF::getInstance(
     <span class="hljs-string">'Adapter\Suggest'</span>,
-    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'loggerClass'</span>],
-    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'configuration'</span>],
-    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'request'</span>],
-    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'clientUrlBuilder'</span>]
+    $dic[<span class="hljs-string">'loggerClass'</span>],
+    $dic[<span class="hljs-string">'configuration'</span>],
+    $dic[<span class="hljs-string">'request'</span>],
+    $dic[<span class="hljs-string">'clientUrlBuilder'</span>]
 );</pre></div></div>
             
         </li>
@@ -152,8 +149,8 @@ output which will be processed by the frontend instead of the library.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">try</span> {
-	<span class="hljs-keyword">echo</span> <span class="hljs-variable">$suggestAdapter</span>-&gt;getRawSuggestions();
-} <span class="hljs-keyword">catch</span> (\<span class="hljs-keyword">Exception</span> <span class="hljs-variable">$e</span>) {
+	<span class="hljs-keyword">echo</span> $suggestAdapter-&gt;getRawSuggestions();
+} <span class="hljs-keyword">catch</span> (\<span class="hljs-keyword">Exception</span> $e) {
 	<span class="hljs-keyword">if</span> (!headers_sent()) {
 		<span class="hljs-comment">/* close connection to browser if that is possible */</span>
 		header(<span class="hljs-string">"Content-Length: 0"</span>);

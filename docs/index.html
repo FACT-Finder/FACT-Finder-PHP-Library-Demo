@@ -16,28 +16,25 @@
           <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
           <a class="small" href="javascript:void(0);">+</a>
           <div id="jump_wrapper">
-          <div id="jump_page">
-            
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
               
-              <a class="source" href="index.html">
-                index.php
-              </a>
-            
+                
+                <a class="source" href="index.html">
+                  index.php
+                </a>
               
-              <a class="source" href="suggest.html">
-                suggest.php
-              </a>
-            
+                
+                <a class="source" href="suggest.html">
+                  suggest.php
+                </a>
               
-              <a class="source" href="tracking.html">
-                tracking.php
-              </a>
-            
+                
+                <a class="source" href="tracking.html">
+                  tracking.php
+                </a>
               
-              <a class="source" href="initialization.html">
-                initialization.php
-              </a>
-            
+            </div>
           </div>
         </li>
       </ul>
@@ -61,7 +58,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-preprocessor">&lt;?php</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-meta">&lt;?php</span></pre></div></div>
             
         </li>
         
@@ -222,7 +219,7 @@ via <code>FF</code>.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-variable">$dic</span> = FF::getInstance(<span class="hljs-string">'Util\Pimple'</span>);</pre></div></div>
+$dic = FF::getInstance(<span class="hljs-string">'Util\Pimple'</span>);</pre></div></div>
             
         </li>
         
@@ -275,20 +272,20 @@ usually contains everything the adapters need.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-variable">$searchAdapter</span> = FF::getInstance(
+            <div class="content"><div class='highlight'><pre>$searchAdapter = FF::getInstance(
     <span class="hljs-string">'Adapter\Search'</span>,
-    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'loggerClass'</span>],
-    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'configuration'</span>],
-    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'request'</span>],
-    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'clientUrlBuilder'</span>]
+    $dic[<span class="hljs-string">'loggerClass'</span>],
+    $dic[<span class="hljs-string">'configuration'</span>],
+    $dic[<span class="hljs-string">'request'</span>],
+    $dic[<span class="hljs-string">'clientUrlBuilder'</span>]
 );
 
-<span class="hljs-variable">$tagCloudAdapter</span> = FF::getInstance(
+$tagCloudAdapter = FF::getInstance(
     <span class="hljs-string">'Adapter\TagCloud'</span>,
-    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'loggerClass'</span>],
-    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'configuration'</span>],
-    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'request'</span>],
-    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'clientUrlBuilder'</span>]
+    $dic[<span class="hljs-string">'loggerClass'</span>],
+    $dic[<span class="hljs-string">'configuration'</span>],
+    $dic[<span class="hljs-string">'request'</span>],
+    $dic[<span class="hljs-string">'clientUrlBuilder'</span>]
 );</pre></div></div>
             
         </li>
@@ -332,7 +329,7 @@ our requests to the FACT-Finder server (obtained by the adapters).</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-variable">$encoding</span> = <span class="hljs-variable">$dic</span>[<span class="hljs-string">'configuration'</span>]-&gt;getPageContentEncoding();</pre></div></div>
+            <div class="content"><div class='highlight'><pre>$encoding = $dic[<span class="hljs-string">'configuration'</span>]-&gt;getPageContentEncoding();</pre></div></div>
             
         </li>
         
@@ -348,9 +345,9 @@ parameters relating to actual search.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-variable">$searchParameters</span> = FF::getInstance(
+            <div class="content"><div class='highlight'><pre>$searchParameters = FF::getInstance(
     <span class="hljs-string">'Data\SearchParameters'</span>,
-    <span class="hljs-variable">$dic</span>[<span class="hljs-string">'requestParser'</span>]-&gt;getRequestParameters()
+    $dic[<span class="hljs-string">'requestParser'</span>]-&gt;getRequestParameters()
 );</pre></div></div>
             
         </li>
@@ -366,8 +363,7 @@ parameters relating to actual search.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-variable">$target</span> = <span class="hljs-variable">$dic</span>[<span class="hljs-string">'requestParser'</span>]-&gt;getRequestTarget();
-</pre></div></div>
+            <div class="content"><div class='highlight'><pre>$target = $dic[<span class="hljs-string">'requestParser'</span>]-&gt;getRequestTarget();</pre></div></div>
             
         </li>
         
@@ -378,14 +374,14 @@ parameters relating to actual search.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
-              <p>Get or start a session.</p>
+              <p>Get or start a session. This is needed for the tracking.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-variable">$sid</span> = session_id();
-<span class="hljs-keyword">if</span> (<span class="hljs-variable">$sid</span> === <span class="hljs-string">''</span>) {
+            <div class="content"><div class='highlight'><pre>$sid = session_id();
+<span class="hljs-keyword">if</span> ($sid === <span class="hljs-string">''</span>) {
     session_start();
-    <span class="hljs-variable">$sid</span> = session_id();
+    $sid = session_id();
 }</pre></div></div>
             
         </li>
@@ -404,8 +400,8 @@ enum’s class name.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-variable">$searchStatusEnum</span> = FF::getClassName(<span class="hljs-string">'Data\SearchStatus'</span>);</pre></div>
-            <div class='highlight'><pre><span class="hljs-variable">$articleNumberSearchStatusEnum</span> = FF::getClassName(<span class="hljs-string">'Data\ArticleNumberSearchStatus'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>$searchStatusEnum = FF::getClassName(<span class="hljs-string">'Data\SearchStatus'</span>);
+$articleNumberSearchStatusEnum = FF::getClassName(<span class="hljs-string">'Data\ArticleNumberSearchStatus'</span>);</pre></div></div>
             
         </li>
         
@@ -422,13 +418,13 @@ resolved we have to access such functions through a class instance.</em></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Helper</span> {</span>
-    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getTemplate</span><span class="hljs-params">(<span class="hljs-variable">$name</span>)</span> {</span>
-        <span class="hljs-keyword">return</span> TEMPLATE_DIR.DS.<span class="hljs-variable">$name</span>.<span class="hljs-string">'.phtml'</span>;
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Helper</span> </span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getTemplate</span><span class="hljs-params">($name)</span> </span>{
+        <span class="hljs-keyword">return</span> TEMPLATE_DIR.DS.$name.<span class="hljs-string">'.phtml'</span>;
     }
 }
 
-<span class="hljs-variable">$helper</span> = <span class="hljs-keyword">new</span> Helper();</pre></div></div>
+$helper = <span class="hljs-keyword">new</span> Helper();</pre></div></div>
             
         </li>
         
@@ -443,8 +439,8 @@ resolved we have to access such functions through a class instance.</em></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NoQueryException</span> <span class="hljs-keyword">extends</span> \<span class="hljs-title">Exception</span>{</span>}
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RedirectException</span> <span class="hljs-keyword">extends</span> \<span class="hljs-title">Exception</span>{</span>}</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NoQueryException</span> <span class="hljs-keyword">extends</span> \<span class="hljs-title">Exception</span></span>{}
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RedirectException</span> <span class="hljs-keyword">extends</span> \<span class="hljs-title">Exception</span></span>{}</pre></div></div>
             
         </li>
         
@@ -495,9 +491,9 @@ appropriate <code>catch</code> blocks.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-    <span class="hljs-comment">/* TODO: Do this inside the Search adapter? */</span>
-    <span class="hljs-keyword">if</span> (!<span class="hljs-variable">$searchParameters</span>-&gt;getQuery()
-        &amp;&amp; !<span class="hljs-variable">$searchParameters</span>-&gt;isNavigationEnabled()
+    <span class="hljs-comment">/* <span class="hljs-doctag">TODO:</span> Do this inside the Search adapter? */</span>
+    <span class="hljs-keyword">if</span> (!$searchParameters-&gt;getQuery()
+        &amp;&amp; !$searchParameters-&gt;isNavigationEnabled()
     ) {
         <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NoQueryException();
     }</pre></div></div>
@@ -516,8 +512,8 @@ If so, exit the <code>try</code> block with an appropriate exception.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-variable">$campaigns</span> = <span class="hljs-variable">$searchAdapter</span>-&gt;getCampaigns();
-    <span class="hljs-keyword">if</span> (<span class="hljs-variable">$campaigns</span>-&gt;hasRedirect()) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    $campaigns = $searchAdapter-&gt;getCampaigns();
+    <span class="hljs-keyword">if</span> ($campaigns-&gt;hasRedirect()) {</pre></div></div>
             
         </li>
         
@@ -532,12 +528,12 @@ If so, exit the <code>try</code> block with an appropriate exception.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-variable">$url</span> = <span class="hljs-variable">$campaigns</span>-&gt;getRedirectUrl();
+            <div class="content"><div class='highlight'><pre>        $url = $campaigns-&gt;getRedirectUrl();
         <span class="hljs-keyword">if</span> (!headers_sent())
-            header(<span class="hljs-string">'Location: '</span>.<span class="hljs-variable">$url</span>);
+            header(<span class="hljs-string">'Location: '</span>.$url);
         <span class="hljs-keyword">else</span>
             <span class="hljs-keyword">die</span>(<span class="hljs-string">'&lt;meta http-equiv="refresh" content="0; URL='</span>
-               . <span class="hljs-variable">$url</span> . <span class="hljs-string">'"&gt; &lt;a href="'</span> . <span class="hljs-variable">$url</span> . <span class="hljs-string">'"&gt;&lt;/a&gt;'</span>);
+               . $url . <span class="hljs-string">'"&gt; &lt;a href="'</span> . $url . <span class="hljs-string">'"&gt;&lt;/a&gt;'</span>);
     }</pre></div></div>
             
         </li>
@@ -554,20 +550,19 @@ variables. The templates will then use these to render the page.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    
-    <span class="hljs-variable">$status</span>                 = <span class="hljs-variable">$searchAdapter</span>-&gt;getStatus();
-    <span class="hljs-variable">$articleNumberStatus</span>    = <span class="hljs-variable">$searchAdapter</span>-&gt;getArticleNumberStatus();
-    <span class="hljs-variable">$isSearchTimedOut</span>       = <span class="hljs-variable">$searchAdapter</span>-&gt;isSearchTimedOut();
+            <div class="content"><div class='highlight'><pre>    $status                 = $searchAdapter-&gt;getStatus();
+    $articleNumberStatus    = $searchAdapter-&gt;getArticleNumberStatus();
+    $isSearchTimedOut       = $searchAdapter-&gt;isSearchTimedOut();
 
-    <span class="hljs-variable">$productsPerPageOptions</span> = <span class="hljs-variable">$searchAdapter</span>-&gt;getResultsPerPageOptions();
-    <span class="hljs-variable">$breadCrumbTrail</span>        = <span class="hljs-variable">$searchAdapter</span>-&gt;getBreadCrumbTrail();
-    <span class="hljs-variable">$singleWordSearch</span>       = <span class="hljs-variable">$searchAdapter</span>-&gt;getSingleWordSearch();
-    <span class="hljs-variable">$paging</span>                 = <span class="hljs-variable">$searchAdapter</span>-&gt;getPaging();
-    <span class="hljs-variable">$sorting</span>                = <span class="hljs-variable">$searchAdapter</span>-&gt;getSorting();
-    <span class="hljs-variable">$asn</span>                    = <span class="hljs-variable">$searchAdapter</span>-&gt;getAfterSearchNavigation();
-    <span class="hljs-variable">$result</span>                 = <span class="hljs-variable">$searchAdapter</span>-&gt;getResult();
+    $productsPerPageOptions = $searchAdapter-&gt;getResultsPerPageOptions();
+    $breadCrumbTrail        = $searchAdapter-&gt;getBreadCrumbTrail();
+    $singleWordSearch       = $searchAdapter-&gt;getSingleWordSearch();
+    $paging                 = $searchAdapter-&gt;getPaging();
+    $sorting                = $searchAdapter-&gt;getSorting();
+    $asn                    = $searchAdapter-&gt;getAfterSearchNavigation();
+    $result                 = $searchAdapter-&gt;getResult();
 
-    <span class="hljs-variable">$tagCloud</span>               = <span class="hljs-variable">$tagCloudAdapter</span>-&gt;getTagCloud();
+    $tagCloud               = $tagCloudAdapter-&gt;getTagCloud();
 
     <span class="hljs-comment">/*$util = FF::getInstance('util', $searchAdapter);*/</span></pre></div></div>
             
@@ -585,13 +580,13 @@ appropriate template will be rendered.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>} <span class="hljs-keyword">catch</span> (\<span class="hljs-keyword">Exception</span> <span class="hljs-variable">$e</span>) {
-    <span class="hljs-keyword">if</span>(<span class="hljs-variable">$e</span> <span class="hljs-keyword">instanceof</span> NoQueryException) {
-        <span class="hljs-variable">$message</span> = <span class="hljs-string">'Please enter a search query'</span>;
-        <span class="hljs-variable">$status</span> = <span class="hljs-variable">$searchStatusEnum</span>::EmptyResult();
+            <div class="content"><div class='highlight'><pre>} <span class="hljs-keyword">catch</span> (\<span class="hljs-keyword">Exception</span> $e) {
+    <span class="hljs-keyword">if</span>($e <span class="hljs-keyword">instanceof</span> NoQueryException) {
+        $message = <span class="hljs-string">'Please enter a search query'</span>;
+        $status = $searchStatusEnum::EmptyResult();
     } <span class="hljs-keyword">else</span> {
-        <span class="hljs-variable">$error</span> = <span class="hljs-variable">$e</span>-&gt;getMessage();
-        <span class="hljs-variable">$status</span> = <span class="hljs-variable">$searchStatusEnum</span>::NoResult();
+        $error = $e-&gt;getMessage();
+        $status = $searchStatusEnum::NoResult();
     }
 }</pre></div></div>
             
@@ -630,24 +625,10 @@ occurred.</li>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">switch</span> (<span class="hljs-variable">$status</span>) {
-    <span class="hljs-keyword">case</span> <span class="hljs-variable">$searchStatusEnum</span>::RecordsFound():
-        <span class="hljs-keyword">include</span> <span class="hljs-variable">$helper</span>-&gt;getTemplate(<span class="hljs-string">'index'</span>);
-        <span class="hljs-keyword">break</span>;
-    <span class="hljs-keyword">case</span> <span class="hljs-variable">$searchStatusEnum</span>::EmptyResult():
-        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$message</span>))
-            <span class="hljs-variable">$message</span> = <span class="hljs-string">'No result for &lt;strong&gt;"'</span>
-                     . htmlspecialchars(<span class="hljs-variable">$searchParameters</span>-&gt;getQuery())
-                     . <span class="hljs-string">'"&lt;/strong&gt;'</span>;
-        <span class="hljs-keyword">include</span> <span class="hljs-variable">$helper</span>-&gt;getTemplate(<span class="hljs-string">'noMatch'</span>);
-        <span class="hljs-keyword">break</span>;
-    <span class="hljs-keyword">case</span> <span class="hljs-variable">$searchStatusEnum</span>::NoResult():
-    <span class="hljs-keyword">default</span>:
-        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$error</span>))
-            <span class="hljs-variable">$error</span> = <span class="hljs-string">'No result - an error occurred...'</span>;
-        <span class="hljs-keyword">include</span> <span class="hljs-variable">$helper</span>-&gt;getTemplate(<span class="hljs-string">'error'</span>);
-        <span class="hljs-keyword">break</span>;
-}</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">switch</span> ($status) {
+    <span class="hljs-keyword">case</span> $searchStatusEnum::RecordsFound():
+        <span class="hljs-keyword">switch</span> ($articleNumberStatus) {
+            <span class="hljs-keyword">case</span> $articleNumberSearchStatusEnum::IsArticleNumberResultFound():</pre></div></div>
             
         </li>
         
@@ -658,13 +639,54 @@ occurred.</li>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
+              <p>redirect to detail page</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">isset</span>($fieldname)) {
+                    <span class="hljs-keyword">include</span> <span class="hljs-string">'templates/fieldnamesConfig.php'</span>;
+                }
+                $detailUrl = $result[<span class="hljs-number">0</span>]-&gt;getField($fieldname[<span class="hljs-string">'detailUrl'</span>]);
+                         <span class="hljs-keyword">if</span> (!headers_sent())
+                    header(<span class="hljs-string">'Location: '</span>.$detailUrl);
+                <span class="hljs-keyword">else</span>
+                    <span class="hljs-keyword">die</span>(<span class="hljs-string">'&lt;meta http-equiv="refresh" content="0; URL='</span>
+                       . $detailUrl . <span class="hljs-string">'"&gt; &lt;a href="'</span> . $detailUrl . <span class="hljs-string">'"&gt;&lt;/a&gt;'</span>);
+            <span class="hljs-keyword">default</span>:
+                <span class="hljs-keyword">include</span> $helper-&gt;getTemplate(<span class="hljs-string">'index'</span>);
+        }
+        <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> $searchStatusEnum::EmptyResult():
+        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">isset</span>($message))
+            $message = <span class="hljs-string">'No result for &lt;strong&gt;"'</span>
+                     . htmlspecialchars($searchParameters-&gt;getQuery())
+                     . <span class="hljs-string">'"&lt;/strong&gt;'</span>;
+        <span class="hljs-keyword">include</span> $helper-&gt;getTemplate(<span class="hljs-string">'noMatch'</span>);
+        <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> $searchStatusEnum::NoResult():
+    <span class="hljs-keyword">default</span>:
+        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">isset</span>($error))
+            $error = <span class="hljs-string">'No result - an error occurred...'</span>;
+        <span class="hljs-keyword">include</span> $helper-&gt;getTemplate(<span class="hljs-string">'error'</span>);
+        <span class="hljs-keyword">break</span>;
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
               <p>Finally, clean the buffer echo its contents. This string will contain the
 entire HTML page.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-variable">$output</span> = ob_get_clean();
-<span class="hljs-keyword">echo</span> <span class="hljs-variable">$output</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>$output = ob_get_clean();
+<span class="hljs-keyword">echo</span> $output;</pre></div></div>
             
         </li>
         
