@@ -33,6 +33,14 @@ var tracking = {
         });
     },
 
+    recommendationClick : function(channel, sessionId, id, masterId, mainId) {
+        this.doTrack('recommendationClick', channel, sessionId, {
+            id : id,
+            masterId : masterId,
+            mainId : mainId
+        });
+    },
+
     cart : function(channel, sessionId, id, masterId, count, price, query) {
         this.doTrack('cart', channel, sessionId, {
             id : id,
@@ -50,13 +58,14 @@ var tracking = {
         this.cart(channel, sessionId, id, masterId, count, price, query);
     },
 
-    checkout : function(channel, sessionId, id, masterId, count, price, query) {
+    checkout : function(channel, sessionId, id, masterId, count, price, query, userId) {
         this.doTrack('checkout', channel, sessionId, {
             id : id,
             masterId : masterId,
             count : count,
             price : price,
-            query : query
+            query : query,
+            userId : userId
         });
     },
 
