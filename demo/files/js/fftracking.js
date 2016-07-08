@@ -16,7 +16,10 @@ var tracking = {
             data : params,
             contentType : "application/x-www-form-urlencoded; charset=UTF-8",
             cache : false,
-            async : false
+            async : false,
+            headers : {
+                'sid' : sessionId
+            }
         });
     },
 
@@ -58,7 +61,8 @@ var tracking = {
         this.cart(channel, sessionId, id, masterId, count, price, query);
     },
 
-    checkout : function(channel, sessionId, id, masterId, count, price, query, userId) {
+    checkout : function(channel, sessionId, id, masterId, count, price, query,
+            userId) {
         this.doTrack('checkout', channel, sessionId, {
             id : id,
             masterId : masterId,
