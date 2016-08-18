@@ -164,7 +164,7 @@ try {
     // Don't even attempt a search if there is no search query.
 
     /* TODO: Do this inside the Search adapter? */
-    if (!$searchParameters->getQuery()
+    if (!$searchParameters->getQuery() && !$searchParameters->getSeoPath()
         && !$searchParameters->isNavigationEnabled()
     ) {
         throw new NoQueryException();
