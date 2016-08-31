@@ -128,6 +128,8 @@ if ($sid === '') {
     session_start();
     $sid = session_id();
 }
+// Set the session id for personalised results.
+$searchAdapter->setSid($sid);
 
 // The library contains a few "enums" (of course, PHP does not have
 // enums, but we've tried to work around them as closely as possible).
@@ -228,7 +230,7 @@ switch ($status) {
     case $searchStatusEnum::RecordsFound():
         switch ($articleNumberStatus) {
             case $articleNumberSearchStatusEnum::IsArticleNumberResultFound():
-                // redirect to detail page
+                // Redirect to the detail page, if it's an exact match.
                 if (!isset($fieldname)) {
                     include 'templates/fieldnamesConfig.php';
                 }
