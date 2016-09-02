@@ -34,6 +34,11 @@
                   tracking.php
                 </a>
               
+                
+                <a class="source" href="initialization.html">
+                  initialization.php
+                </a>
+              
             </div>
           </div>
         </li>
@@ -393,6 +398,21 @@ parameters relating to actual search.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
+              <p>Set the session id for personalised results.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>$searchAdapter-&gt;setSid($sid);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
               <p>The library contains a few “enums” (of course, PHP does not have
 enums, but we’ve tried to work around them as closely as possible).
 Their values can be obtained from static methods, so we’ll need the
@@ -406,11 +426,11 @@ $articleNumberSearchStatusEnum = FF::getClassName(<span class="hljs-string">'Dat
         </li>
         
         
-        <li id="section-20">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>This class provides functions to the included templates. <em>For some reason
 we cannot call global functions directly in included files. Until this is
@@ -429,11 +449,11 @@ $helper = <span class="hljs-keyword">new</span> Helper();</pre></div></div>
         </li>
         
         
-        <li id="section-21">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>We also define two exceptions for the following try-catch statement.</p>
 
@@ -445,11 +465,11 @@ $helper = <span class="hljs-keyword">new</span> Helper();</pre></div></div>
         </li>
         
         
-        <li id="section-22">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>Activate the output buffer, so that we don’t render immediately to
 the response.</p>
@@ -461,11 +481,11 @@ the response.</p>
         </li>
         
         
-        <li id="section-23">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>We slightly abuse exception handling for flow control here. If all
 goes well, the entire page will be rendered in the <code>try</code> block.
@@ -480,11 +500,11 @@ appropriate <code>catch</code> blocks.</p>
         </li>
         
         
-        <li id="section-24">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>Don’t even attempt a search if there is no search query.</p>
 
@@ -492,7 +512,7 @@ appropriate <code>catch</code> blocks.</p>
             
             <div class="content"><div class='highlight'><pre>
     <span class="hljs-comment">/* <span class="hljs-doctag">TODO:</span> Do this inside the Search adapter? */</span>
-    <span class="hljs-keyword">if</span> (!$searchParameters-&gt;getQuery()
+    <span class="hljs-keyword">if</span> (!$searchParameters-&gt;getQuery() &amp;&amp; !$searchParameters-&gt;getSeoPath()
         &amp;&amp; !$searchParameters-&gt;isNavigationEnabled()
     ) {
         <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NoQueryException();
@@ -501,11 +521,11 @@ appropriate <code>catch</code> blocks.</p>
         </li>
         
         
-        <li id="section-25">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Get the campaigns first, because they might contain a redirect.
 If so, exit the <code>try</code> block with an appropriate exception.</p>
@@ -518,11 +538,11 @@ If so, exit the <code>try</code> block with an appropriate exception.</p>
         </li>
         
         
-        <li id="section-26">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>throw new RedirectException($campaigns-&gt;getRedirectUrl());</p>
 
@@ -539,11 +559,11 @@ If so, exit the <code>try</code> block with an appropriate exception.</p>
         </li>
         
         
-        <li id="section-27">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>Now we’ll save all the data from our adapters into corresponding
 variables. The templates will then use these to render the page.</p>
@@ -569,11 +589,11 @@ variables. The templates will then use these to render the page.</p>
         </li>
         
         
-        <li id="section-28">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p>If an exception occurred, manually select a search status so that the
 appropriate template will be rendered.</p>
@@ -593,11 +613,11 @@ appropriate template will be rendered.</p>
         </li>
         
         
-        <li id="section-29">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <h2 id="rendering-the-page">Rendering the page</h2>
 
@@ -606,11 +626,11 @@ appropriate template will be rendered.</p>
         </li>
         
         
-        <li id="section-30">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <p>Depending on the status of search, render the appropriate
 template. There are three different “root” templates (i.e.
@@ -633,13 +653,13 @@ occurred.</li>
         </li>
         
         
-        <li id="section-31">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
-              <p>redirect to detail page</p>
+              <p>Redirect to the detail page, if it’s an exact match.</p>
 
             </div>
             
@@ -674,11 +694,11 @@ occurred.</li>
         </li>
         
         
-        <li id="section-32">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <p>Finally, clean the buffer echo its contents. This string will contain the
 entire HTML page.</p>

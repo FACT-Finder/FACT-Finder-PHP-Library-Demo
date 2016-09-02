@@ -16,28 +16,30 @@
           <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
           <a class="small" href="javascript:void(0);">+</a>
           <div id="jump_wrapper">
-          <div id="jump_page">
-            
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
               
-              <a class="source" href="index.html">
-                index.php
-              </a>
-            
+                
+                <a class="source" href="index.html">
+                  index.php
+                </a>
               
-              <a class="source" href="suggest.html">
-                suggest.php
-              </a>
-            
+                
+                <a class="source" href="suggest.html">
+                  suggest.php
+                </a>
               
-              <a class="source" href="tracking.html">
-                tracking.php
-              </a>
-            
+                
+                <a class="source" href="tracking.html">
+                  tracking.php
+                </a>
               
-              <a class="source" href="initialization.html">
-                initialization.php
-              </a>
-            
+                
+                <a class="source" href="initialization.html">
+                  initialization.php
+                </a>
+              
+            </div>
           </div>
         </li>
       </ul>
@@ -61,7 +63,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-preprocessor">&lt;?php</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-meta">&lt;?php</span></pre></div></div>
             
         </li>
         
@@ -161,10 +163,10 @@ library.</li>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-variable">$dic</span>[<span class="hljs-string">'loggerClass'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
-    <span class="hljs-variable">$loggerClass</span> = FF::getClassName(<span class="hljs-string">'Util\Log4PhpLogger'</span>);
-    <span class="hljs-variable">$loggerClass</span>::configure(USERDATA_DIR.DS.<span class="hljs-string">'log4php.xml'</span>);
-    <span class="hljs-keyword">return</span> <span class="hljs-variable">$loggerClass</span>;
+$dic[<span class="hljs-string">'loggerClass'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($c)</span> </span>{
+    $loggerClass = FF::getClassName(<span class="hljs-string">'Util\Log4PhpLogger'</span>);
+    $loggerClass::configure(USERDATA_DIR.DS.<span class="hljs-string">'log4php.xml'</span>);
+    <span class="hljs-keyword">return</span> $loggerClass;
 };</pre></div></div>
             
         </li>
@@ -185,7 +187,7 @@ time, we need the configuration, so again we use a shared dependency.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-variable">$dic</span>[<span class="hljs-string">'configuration'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
+$dic[<span class="hljs-string">'configuration'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($c)</span> </span>{
     <span class="hljs-keyword">return</span> FF::getInstance(
         <span class="hljs-string">'Core\XmlConfiguration'</span>,
         USERDATA_DIR.DS.<span class="hljs-string">'config.xml'</span>,
@@ -213,8 +215,8 @@ do need something fancy, you’d be better off writing a new factory).</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-variable">$dic</span>[<span class="hljs-string">'request'</span>] = <span class="hljs-variable">$dic</span>-&gt;factory(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
-    <span class="hljs-keyword">return</span> <span class="hljs-variable">$c</span>[<span class="hljs-string">'requestFactory'</span>]-&gt;getRequest();
+$dic[<span class="hljs-string">'request'</span>] = $dic-&gt;factory(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($c)</span> </span>{
+    <span class="hljs-keyword">return</span> $c[<span class="hljs-string">'requestFactory'</span>]-&gt;getRequest();
 });</pre></div></div>
             
         </li>
@@ -255,12 +257,12 @@ sockets for your requests, you can implement the
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-variable">$dic</span>[<span class="hljs-string">'requestFactory'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
+$dic[<span class="hljs-string">'requestFactory'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($c)</span> </span>{
     <span class="hljs-keyword">return</span> FF::getInstance(
         <span class="hljs-string">'Core\Server\MultiCurlRequestFactory'</span>,
-        <span class="hljs-variable">$c</span>[<span class="hljs-string">'loggerClass'</span>],
-        <span class="hljs-variable">$c</span>[<span class="hljs-string">'configuration'</span>],
-        <span class="hljs-variable">$c</span>[<span class="hljs-string">'requestParser'</span>]-&gt;getRequestParameters()
+        $c[<span class="hljs-string">'loggerClass'</span>],
+        $c[<span class="hljs-string">'configuration'</span>],
+        $c[<span class="hljs-string">'requestParser'</span>]-&gt;getRequestParameters()
     );
 };</pre></div></div>
             
@@ -281,13 +283,13 @@ for that, too.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-variable">$dic</span>[<span class="hljs-string">'clientUrlBuilder'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
+$dic[<span class="hljs-string">'clientUrlBuilder'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($c)</span> </span>{
     <span class="hljs-keyword">return</span> FF::getInstance(
         <span class="hljs-string">'Core\Client\UrlBuilder'</span>,
-        <span class="hljs-variable">$c</span>[<span class="hljs-string">'loggerClass'</span>],
-        <span class="hljs-variable">$c</span>[<span class="hljs-string">'configuration'</span>],
-        <span class="hljs-variable">$c</span>[<span class="hljs-string">'requestParser'</span>],
-        <span class="hljs-variable">$c</span>[<span class="hljs-string">'encodingConverter'</span>]
+        $c[<span class="hljs-string">'loggerClass'</span>],
+        $c[<span class="hljs-string">'configuration'</span>],
+        $c[<span class="hljs-string">'requestParser'</span>],
+        $c[<span class="hljs-string">'encodingConverter'</span>]
     );
 };</pre></div></div>
             
@@ -322,12 +324,12 @@ interesting parameters for you.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-variable">$dic</span>[<span class="hljs-string">'requestParser'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
+$dic[<span class="hljs-string">'requestParser'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($c)</span> </span>{
     <span class="hljs-keyword">return</span> FF::getInstance(
         <span class="hljs-string">'Core\Client\RequestParser'</span>,
-        <span class="hljs-variable">$c</span>[<span class="hljs-string">'loggerClass'</span>],
-        <span class="hljs-variable">$c</span>[<span class="hljs-string">'configuration'</span>],
-        <span class="hljs-variable">$c</span>[<span class="hljs-string">'encodingConverter'</span>]
+        $c[<span class="hljs-string">'loggerClass'</span>],
+        $c[<span class="hljs-string">'configuration'</span>],
+        $c[<span class="hljs-string">'encodingConverter'</span>]
     );
 };</pre></div></div>
             
@@ -352,19 +354,19 @@ check if we can use <code>utf8_encode</code>/<code>utf8_decode</code> instead.</
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-variable">$dic</span>[<span class="hljs-string">'encodingConverter'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-variable">$c</span>)</span> {</span>
+$dic[<span class="hljs-string">'encodingConverter'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($c)</span> </span>{
     <span class="hljs-keyword">if</span> (extension_loaded(<span class="hljs-string">'iconv'</span>))
-        <span class="hljs-variable">$type</span> = <span class="hljs-string">'Core\IConvEncodingConverter'</span>;
+        $type = <span class="hljs-string">'Core\IConvEncodingConverter'</span>;
     <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (function_exists(<span class="hljs-string">'utf8_encode'</span>)
              &amp;&amp; function_exists(<span class="hljs-string">'utf8_decode'</span>))
-        <span class="hljs-variable">$type</span> = <span class="hljs-string">'Core\Utf8EncodingConverter'</span>;
+        $type = <span class="hljs-string">'Core\Utf8EncodingConverter'</span>;
     <span class="hljs-keyword">else</span>
         <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> \<span class="hljs-keyword">Exception</span>(<span class="hljs-string">'No encoding conversion available.'</span>);
 
     <span class="hljs-keyword">return</span> FF::getInstance(
-        <span class="hljs-variable">$type</span>,
-        <span class="hljs-variable">$c</span>[<span class="hljs-string">'loggerClass'</span>],
-        <span class="hljs-variable">$c</span>[<span class="hljs-string">'configuration'</span>]
+        $type,
+        $c[<span class="hljs-string">'loggerClass'</span>],
+        $c[<span class="hljs-string">'configuration'</span>]
     );
 };</pre></div></div>
             
