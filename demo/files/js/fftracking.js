@@ -12,7 +12,7 @@ var tracking = {
         }
         $.ajax({
             type: "GET",
-            url: "tracking.php",
+            url: "demo/tracking.php",
             data: params,
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             cache: false,
