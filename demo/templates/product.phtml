@@ -14,6 +14,12 @@
     $origPos     = $record->getField("__ORIG_POSITION__");
     $campaign    = $record->getField("__FFCampaign__");
     $instoreAds  = $record->getField("__FFInstoreAds__");
+    $searchTerm  = addslashes(strip_tags($searchParameters->getQuery()));
+    if (strlen($searchTerm) === 0 && $searchParameters->getSeoPath() && strpos(strrev($searchParameters->getSeoPath()), 'q/') === 0){
+        $seoPathLength = strlen($searchParameters->getSeoPath());
+        $seoPathWithoutSuffix = substr($searchParameters->getSeoPath(), 0, $seoPathLength-2);
+        $searchTerm = substr($seoPathWithoutSuffix, strrpos($seoPathWithoutSuffix, '/')+1);
+    }
 ?>
 
 <div class="productWrap">
@@ -24,7 +30,7 @@
                         '<?php echo $sid; ?>',
                         '<?php echo $trackingId; ?>',
                         '<?php echo $masterId; ?>',
-                        '<?php echo addslashes(strip_tags($searchParameters->getQuery())); ?>', 
+                        '<?php echo $searchTerm; ?>', 
                         '<?php echo $record->getPosition(); ?>',
                         '<?php echo $origPos; ?>',
                         '<?php echo $paging->getCurrentPage()->getPageNumber(); ?>',
@@ -57,7 +63,7 @@
                         '<?php echo $sid; ?>',
                         '<?php echo $trackingId; ?>',
                         '<?php echo $masterId; ?>',
-                        '<?php echo addslashes(strip_tags($searchParameters->getQuery())); ?>', 
+                        '<?php echo $searchTerm; ?>', 
                         '<?php echo $record->getPosition(); ?>',
                         '<?php echo $origPos; ?>',
                         '<?php echo $paging->getCurrentPage()->getPageNumber(); ?>',

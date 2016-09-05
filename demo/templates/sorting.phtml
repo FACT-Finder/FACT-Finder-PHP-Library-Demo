@@ -15,7 +15,12 @@
             $selected = $sortItem->isSelected() ? ' selected ' : '';
         ?>
             <option value="<?php echo $sortItem->getUrl(); ?>"<?php echo $selected; ?>>
-                <?php echo $labels[$sortItem->getLabel()]; ?>
+                <?php if (isset($labels[$sortItem->getLabel()])) {
+                          echo $labels[$sortItem->getLabel()]; 
+                      } else { 
+                          echo $sortItem->getLabel();
+                      } 
+                ?>
                 <?php if ($sortItem->isSelected()): ?>
                      (selected)
                 <?php endif; ?>
